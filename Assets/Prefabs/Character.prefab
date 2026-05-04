@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  sensitivityX: 300
+  sensitivityX: 50
   sensitivityY: 50
   minVerticalAngle: -80
   maxVerticalAngle: 80
