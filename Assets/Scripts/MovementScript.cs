@@ -1,6 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
 
 public class MovementScript : MonoBehaviour
 {
@@ -21,11 +22,13 @@ public class MovementScript : MonoBehaviour
 
     private Animator animator;
 
+
     [Header("Movement Variables")]
     public float groundSpeed;
     public float airborneSpeed;
     public float strafeRatio;
     public float backstepRatio;
+    public float minspeedforpostprocessing;
 
     [Header("Camera Variables")]
     public float sensitivityX = 15f;
@@ -46,6 +49,11 @@ public class MovementScript : MonoBehaviour
     public float downacceleration;
     private bool previousgrounded;
 
+    [Header("Post Processing Variables")]
+    public float timetosetweight;
+    private float lastweight;
+    private PostProcessVolume volume;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +62,7 @@ public class MovementScript : MonoBehaviour
         JumpInputaction = InputSystem.actions.FindAction("Jump");
         rb = GetComponent<Rigidbody>();
         CameraTransform = GetComponentInChildren<CinemachineVirtualCamera>().transform;
+        volume = FindAnyObjectByType<PostProcessVolume>();
         groundDetectionScript = GetComponentInChildren<GroundDetectionScript>();
         animator = GetComponentInChildren<Animator>();
     }
@@ -203,6 +212,12 @@ public class MovementScript : MonoBehaviour
 
 
         previousgrounded = groundDetectionScript.grounded;
+
+        // post precessing
+
+        float magnitude = rb.velocity.magnitude / minspeedforpostprocessing;
+        lastweight = Mathf.Lerp(lastweight, magnitude, timetosetweight);
+        volume.weight = lastweight;
     }
 
 }
