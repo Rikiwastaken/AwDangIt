@@ -102,6 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundSpeed: 12
   airborneSpeed: 9
+  strafeRatio: 0.5
+  backstepRatio: 0.3
   sensitivityX: 0.15
   sensitivityY: 0.15
   minVerticalAngle: -80

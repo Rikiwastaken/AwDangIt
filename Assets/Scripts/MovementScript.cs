@@ -24,6 +24,8 @@ public class MovementScript : MonoBehaviour
     [Header("Movement Variables")]
     public float groundSpeed;
     public float airborneSpeed;
+    public float strafeRatio;
+    public float backstepRatio;
 
     [Header("Camera Variables")]
     public float sensitivityX = 15f;
@@ -87,7 +89,19 @@ public class MovementScript : MonoBehaviour
                 speed = groundSpeed;
             }
             Vector3 movement = Vector3.zero;
-            movement = new Vector3(MoveValue.x * speed, 0.0f, MoveValue.y * speed);
+            if (MoveValue.y == 0)
+            {
+                movement = new Vector3(MoveValue.x * speed * strafeRatio, 0.0f, MoveValue.y * speed);
+            }
+            else if (MoveValue.y < 0)
+            {
+                movement = new Vector3(MoveValue.x * speed, 0.0f, MoveValue.y * speed * backstepRatio);
+            }
+            else
+            {
+                movement = new Vector3(MoveValue.x * speed, 0.0f, MoveValue.y * speed);
+            }
+
 
             movement = Quaternion.Euler(0, CameraTransform.eulerAngles.y, 0) * movement;
 
