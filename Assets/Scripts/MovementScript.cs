@@ -16,6 +16,7 @@ public class MovementScript : MonoBehaviour
 
     private Rigidbody rb;
     private Transform CameraTransform;
+    private GroundDetectionScript groundDetectionScript;
 
     [Header("Movement Variables")]
     public float speed;
@@ -28,6 +29,16 @@ public class MovementScript : MonoBehaviour
     private float rotationX = 0f;
     private float rotationY = 0f;
 
+    [Header("Jump variables")]
+    public float JumpVerticalSpeed;
+    public float DoubleJumpSpeedRatio;
+    private bool pressedjump;
+    public bool jumpavailable;
+    public bool doublejumpavailable;
+    private int justjumpedcounter;
+    public float jumpduration;
+    public float downacceleration;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +47,7 @@ public class MovementScript : MonoBehaviour
         JumpInputaction = InputSystem.actions.FindAction("Jump");
         rb = GetComponent<Rigidbody>();
         CameraTransform = GetComponentInChildren<Camera>().transform;
+        groundDetectionScript = GetComponentInChildren<GroundDetectionScript>();
     }
 
     // Update is called once per frame
@@ -81,6 +93,61 @@ public class MovementScript : MonoBehaviour
         {
             Vector3 targetspeed = new Vector3(0f, rb.velocity.y, 0f);
             rb.velocity = Vector3.Lerp(rb.velocity, targetspeed, 0.5f);
+        }
+
+        // jump
+
+        if (groundDetectionScript.grounded)
+        {
+            jumpavailable = true;
+            doublejumpavailable = true;
+        }
+
+        if (justjumpedcounter > 0)
+        {
+            justjumpedcounter--;
+        }
+
+        if (JumpInputaction.IsPressed())
+        {
+            if (jumpavailable)
+            {
+
+                jumpavailable = false;
+                pressedjump = true;
+                justjumpedcounter = (int)(jumpduration / Time.deltaTime);
+                rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed, rb.velocity.z);
+
+            }
+
+            else if (doublejumpavailable && !pressedjump)
+            {
+                doublejumpavailable = false;
+                pressedjump = true;
+                justjumpedcounter = (int)(jumpduration / Time.deltaTime);
+                rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed * DoubleJumpSpeedRatio, rb.velocity.z);
+            }
+        }
+        else
+        {
+            if (justjumpedcounter > 0)
+            {
+                if (doublejumpavailable)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed, rb.velocity.z);
+                }
+                else
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed * DoubleJumpSpeedRatio, rb.velocity.z);
+                }
+
+            }
+
+            if (pressedjump)
+            {
+                pressedjump = false;
+            }
+
         }
     }
 
