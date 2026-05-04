@@ -98,16 +98,18 @@ public class MovementScript : MonoBehaviour
 
             rb.velocity = movement;
 
-            if (groundDetectionScript.grounded)
-            {
-                animator.SetFloat("SpeedX", MoveValue.x * 2f);
-                animator.SetFloat("SpeedZ", MoveValue.y * 2f);
-            }
+
         }
         else
         {
+
             Vector3 targetspeed = new Vector3(0f, rb.velocity.y, 0f);
             rb.velocity = Vector3.Lerp(rb.velocity, targetspeed, 0.5f);
+        }
+        if (groundDetectionScript.grounded)
+        {
+            animator.SetFloat("SpeedX", MoveValue.x * 2f);
+            animator.SetFloat("SpeedZ", MoveValue.y * 2f);
         }
 
         // jump
