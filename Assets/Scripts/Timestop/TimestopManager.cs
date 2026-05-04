@@ -17,6 +17,7 @@ public class TimestopManager : MonoBehaviour
     public Building selectedBuilding;
     public Camera mainCamera;
     public CinemachineVirtualCamera virtualCamera;
+    public ArrowSelectIdle arrowSelect;
 
     // Start is called before the first frame update
     void Start()
