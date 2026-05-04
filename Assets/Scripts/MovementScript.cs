@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +24,8 @@ public class MovementScript : MonoBehaviour
     [Header("Movement Variables")]
     public float groundSpeed;
     public float airborneSpeed;
+    public float strafeRatio;
+    public float backstepRatio;
 
     [Header("Camera Variables")]
     public float sensitivityX = 15f;
@@ -50,7 +53,7 @@ public class MovementScript : MonoBehaviour
         MouseInputaction = InputSystem.actions.FindAction("Mouse");
         JumpInputaction = InputSystem.actions.FindAction("Jump");
         rb = GetComponent<Rigidbody>();
-        CameraTransform = GetComponentInChildren<Camera>().transform;
+        CameraTransform = GetComponentInChildren<CinemachineVirtualCamera>().transform;
         groundDetectionScript = GetComponentInChildren<GroundDetectionScript>();
         animator = GetComponentInChildren<Animator>();
     }
@@ -86,7 +89,19 @@ public class MovementScript : MonoBehaviour
                 speed = groundSpeed;
             }
             Vector3 movement = Vector3.zero;
-            movement = new Vector3(MoveValue.x * speed, 0.0f, MoveValue.y * speed);
+            if (MoveValue.y == 0)
+            {
+                movement = new Vector3(MoveValue.x * speed * strafeRatio, 0.0f, MoveValue.y * speed);
+            }
+            else if (MoveValue.y < 0)
+            {
+                movement = new Vector3(MoveValue.x * speed, 0.0f, MoveValue.y * speed * backstepRatio);
+            }
+            else
+            {
+                movement = new Vector3(MoveValue.x * speed, 0.0f, MoveValue.y * speed);
+            }
+
 
             movement = Quaternion.Euler(0, CameraTransform.eulerAngles.y, 0) * movement;
 
@@ -101,8 +116,14 @@ public class MovementScript : MonoBehaviour
         }
         else
         {
+
             Vector3 targetspeed = new Vector3(0f, rb.velocity.y, 0f);
             rb.velocity = Vector3.Lerp(rb.velocity, targetspeed, 0.5f);
+        }
+        if (groundDetectionScript.grounded)
+        {
+            animator.SetFloat("SpeedX", MoveValue.x * 2f);
+            animator.SetFloat("SpeedZ", MoveValue.y * 2f);
         }
 
         // jump
@@ -137,6 +158,7 @@ public class MovementScript : MonoBehaviour
                 pressedjump = true;
                 justjumpedcounter = (int)(jumpduration / Time.deltaTime);
                 rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed * DoubleJumpSpeedRatio, rb.velocity.z);
+                animator.Play("DoubleJump");
             }
         }
         else
@@ -165,8 +187,6 @@ public class MovementScript : MonoBehaviour
 
         if (groundDetectionScript.grounded)
         {
-            float magnitude = Mathf.Sqrt(Vector2.SqrMagnitude(new Vector2(rb.velocity.x, rb.velocity.z)));
-            animator.SetFloat("Speed", magnitude);
             if (!previousgrounded)
             {
                 animator.Play("Fall To Roll");
@@ -176,7 +196,8 @@ public class MovementScript : MonoBehaviour
         else
         {
             animator.SetBool("Falling", true);
-            animator.SetFloat("Speed", 0f);
+            animator.SetFloat("SpeedX", 0f);
+            animator.SetFloat("SpeedZ", 0f);
         }
 
 

@@ -1,4 +1,4 @@
-using System.Collections;
+using Cinemachine;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,14 +10,14 @@ public class TimestopManager : MonoBehaviour
     private InputAction _cursorAction;
     private InputAction _shootAction;
 
-    private readonly List<Building> _childBuildings = new List<Building>();
-    
+    private List<Building> _childBuildings = new List<Building>();
+
     public Vector2Int levelSize;
-    
+
     public Building selectedBuilding;
     public Camera mainCamera;
-    public ArrowSelectIdle arrowSelect;
-    
+    public CinemachineVirtualCamera virtualCamera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +26,10 @@ public class TimestopManager : MonoBehaviour
         _cursorAction = InputSystem.actions.FindAction("Cursor");
         _shootAction = InputSystem.actions.FindAction("Shoot");
 
-        mainCamera.transform.localPosition = new Vector3(
+        virtualCamera.transform.localPosition = new Vector3(
             Constants.TimestopConstants.GridSize * (levelSize.x / 2.0f - 0.5f),
             300.0f,
-            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f  - 0.5f) - 100.0f
+            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f) - 100.0f
         );
 
         foreach (Transform child in transform)
@@ -56,22 +56,22 @@ public class TimestopManager : MonoBehaviour
                     selectedBuilding = aimedBuilding;
                     arrowSelect.gameObject.SetActive(true);
                 }
-                
+
             }
         }
-        
+
         Vector2 moveDir = _moveAction.ReadValue<Vector2>();
-        
+
         if (selectedBuilding)
         {
             arrowSelect.position = selectedBuilding.transform.position + new Vector3(0, 20.0f, 0);
             if (moveDir.x != 0 && _oldMoveDir.x == 0)
             {
-                selectedBuilding.MoveBuilding(new Vector2Int((int) moveDir.x, 0));
+                selectedBuilding.MoveBuilding(new Vector2Int((int)moveDir.x, 0));
             }
             if (moveDir.y != 0 && _oldMoveDir.y == 0)
             {
-                selectedBuilding.MoveBuilding(new Vector2Int(0, (int) moveDir.y));
+                selectedBuilding.MoveBuilding(new Vector2Int(0, (int)moveDir.y));
             }
         }
 
