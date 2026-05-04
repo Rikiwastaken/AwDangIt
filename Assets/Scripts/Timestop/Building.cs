@@ -1,0 +1,84 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Constants;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem;
+
+public class Building : MonoBehaviour
+{
+    public List<Vector2Int> gridSpots;
+    public Vector2Int gridPosition;
+    public bool playerRidden;
+    
+    private TimestopManager _timestopManager;
+
+    public void MoveBuilding(Vector2Int delta)
+    {
+        if (playerRidden)
+        {
+            return;
+        }
+        
+        List<Vector2Int> oldGridPosition = gridSpots.Clone(new ListCloner(), false);
+        for (int i = 0; i < oldGridPosition.Count; i++)
+        {
+            oldGridPosition[i] += gridPosition;
+        }
+        
+        List<Vector2Int> projectedGridPosition = gridSpots.Clone(new ListCloner(), false);
+        for (int i = 0; i < projectedGridPosition.Count; i++)
+        {
+            projectedGridPosition[i] += delta + gridPosition;
+        }
+        
+        bool validMove = true;
+        List<Vector2Int> allPositions = _timestopManager.GetAllBuildingPositions();
+        foreach (var p in projectedGridPosition)
+        {
+            if (p.x < 0 || p.y < 0 || p.x >= _timestopManager.levelSize.x || p.y >= _timestopManager.levelSize.y || (allPositions.Contains(p) && !oldGridPosition.Contains(p)))
+            {
+                validMove = false;
+                break;
+            }
+        }
+        
+        if (validMove)
+        {
+            gridPosition += delta;
+            transform.localPosition = new Vector3(
+                transform.localPosition.x + delta.x * Constants.TimestopConstants.GridSize,
+                transform.localPosition.y,
+                transform.localPosition.z + delta.y * Constants.TimestopConstants.GridSize
+            );
+        }
+        
+    }
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        _timestopManager = transform.parent.gameObject.GetComponent<TimestopManager>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    
+#if UNITY_EDITOR
+    [ContextMenu("Calculate real position")]
+    void CalculateRealPosition()
+    {
+        if (Application.isPlaying)
+        {
+            return;
+        }
+
+        transform.localPosition = new Vector3(gridPosition.x * Constants.TimestopConstants.GridSize, transform.localPosition.y, gridPosition.y * Constants.TimestopConstants.GridSize);
+        UnityEditor.EditorUtility.SetDirty(this);
+    }
+#endif
+}
