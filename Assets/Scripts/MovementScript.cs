@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,7 +51,7 @@ public class MovementScript : MonoBehaviour
         MouseInputaction = InputSystem.actions.FindAction("Mouse");
         JumpInputaction = InputSystem.actions.FindAction("Jump");
         rb = GetComponent<Rigidbody>();
-        CameraTransform = GetComponentInChildren<Camera>().transform;
+        CameraTransform = GetComponentInChildren<CinemachineVirtualCamera>().transform;
         groundDetectionScript = GetComponentInChildren<GroundDetectionScript>();
         animator = GetComponentInChildren<Animator>();
     }

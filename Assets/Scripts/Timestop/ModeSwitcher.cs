@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,12 +7,12 @@ public class ModeSwitcher : MonoBehaviour
     private InputAction _modeSwitchInput;
     private TimestopManager _timestopManager;
 
-    public Camera timestopCamera;
+    public CinemachineVirtualCamera timestopCamera;
     public MovementScript movementScript;
-    public Camera movementCamera;
+    public CinemachineVirtualCamera movementCamera;
     public GroundDetectionScript movementGrounded;
     public Rigidbody movementRigid;
-    
+
     public bool inTimestop = false;
     // Start is called before the first frame update
     void Start()
