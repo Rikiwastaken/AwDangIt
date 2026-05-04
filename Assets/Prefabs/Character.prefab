@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6385269668543827824}
   - component: {fileID: 4675468352159090598}
   - component: {fileID: 7020195997715162690}
+  - component: {fileID: 8986622084099528597}
   m_Layer: 3
   m_Name: Character
   m_TagString: Untagged
@@ -112,6 +113,20 @@ MonoBehaviour:
   doublejumpavailable: 0
   jumpduration: 0.2
   downacceleration: 9.8
+--- !u!114 &8986622084099528597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993830497084104787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be268f0c55f575150809565973a00149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletHolePrefab: {fileID: 2503116845759288200, guid: 6bf367fabb5f343e3b6c26116f5574b3, type: 3}
+  playerCamera: {fileID: 388747542125026746}
 --- !u!1 &2704726361081414029
 GameObject:
   m_ObjectHideFlags: 0
