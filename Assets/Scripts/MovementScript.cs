@@ -97,7 +97,11 @@ public class MovementScript : MonoBehaviour
 
             rb.velocity = movement;
 
-
+            if (groundDetectionScript.grounded)
+            {
+                animator.SetFloat("SpeedX", MoveValue.x * 2f);
+                animator.SetFloat("SpeedZ", MoveValue.y * 2f);
+            }
         }
         else
         {
@@ -137,6 +141,7 @@ public class MovementScript : MonoBehaviour
                 pressedjump = true;
                 justjumpedcounter = (int)(jumpduration / Time.deltaTime);
                 rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed * DoubleJumpSpeedRatio, rb.velocity.z);
+                animator.Play("DoubleJump");
             }
         }
         else
@@ -165,8 +170,6 @@ public class MovementScript : MonoBehaviour
 
         if (groundDetectionScript.grounded)
         {
-            float magnitude = Mathf.Sqrt(Vector2.SqrMagnitude(new Vector2(rb.velocity.x, rb.velocity.z)));
-            animator.SetFloat("Speed", magnitude);
             if (!previousgrounded)
             {
                 animator.Play("Fall To Roll");
@@ -176,7 +179,8 @@ public class MovementScript : MonoBehaviour
         else
         {
             animator.SetBool("Falling", true);
-            animator.SetFloat("Speed", 0f);
+            animator.SetFloat("SpeedX", 0f);
+            animator.SetFloat("SpeedZ", 0f);
         }
 
 
