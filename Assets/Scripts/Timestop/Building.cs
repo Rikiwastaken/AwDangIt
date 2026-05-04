@@ -10,11 +10,17 @@ public class Building : MonoBehaviour
 {
     public List<Vector2Int> gridSpots;
     public Vector2Int gridPosition;
-
+    public bool playerRidden;
+    
     private TimestopManager _timestopManager;
 
     public void MoveBuilding(Vector2Int delta)
     {
+        if (playerRidden)
+        {
+            return;
+        }
+        
         List<Vector2Int> projectedGridPosition = gridSpots.Clone(new ListCloner(), false);
         
         for (int i = 0; i < projectedGridPosition.Count; i++)

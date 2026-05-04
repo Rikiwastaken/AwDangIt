@@ -39,5 +39,13 @@ public class ModeSwitcher : MonoBehaviour
         timestopCamera.enabled = inTimestop;
         movementScript.enabled = !inTimestop;
         movementCamera.enabled = !inTimestop;
+        if (inTimestop)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 }
