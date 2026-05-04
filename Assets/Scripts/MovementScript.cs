@@ -18,6 +18,8 @@ public class MovementScript : MonoBehaviour
     private Transform CameraTransform;
     private GroundDetectionScript groundDetectionScript;
 
+    private Animator animator;
+
     [Header("Movement Variables")]
     public float speed;
 
@@ -38,6 +40,7 @@ public class MovementScript : MonoBehaviour
     private int justjumpedcounter;
     public float jumpduration;
     public float downacceleration;
+    private bool previousgrounded;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +51,7 @@ public class MovementScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         CameraTransform = GetComponentInChildren<Camera>().transform;
         groundDetectionScript = GetComponentInChildren<GroundDetectionScript>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -117,6 +121,7 @@ public class MovementScript : MonoBehaviour
                 pressedjump = true;
                 justjumpedcounter = (int)(jumpduration / Time.deltaTime);
                 rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed, rb.velocity.z);
+                animator.Play("Jump");
 
             }
 
@@ -149,6 +154,28 @@ public class MovementScript : MonoBehaviour
             }
 
         }
+
+        // animations
+
+        if (groundDetectionScript.grounded)
+        {
+            float magnitude = Mathf.Sqrt(Vector2.SqrMagnitude(new Vector2(rb.velocity.x, rb.velocity.z)));
+            animator.SetFloat("Speed", magnitude);
+            if (!previousgrounded)
+            {
+                animator.Play("Fall To Roll");
+            }
+            animator.SetBool("Falling", false);
+        }
+        else
+        {
+            animator.SetBool("Falling", true);
+            animator.SetFloat("Speed", 0f);
+        }
+
+
+
+        previousgrounded = groundDetectionScript.grounded;
     }
 
 }
