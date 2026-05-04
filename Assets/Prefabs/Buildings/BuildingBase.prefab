@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3c79661f684f9e198dae84184bf57f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSpots:
+  - {x: 0, y: 0}
+  gridPosition: {x: 0, y: 0}
 --- !u!1 &5694761328045078630
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +60,7 @@ GameObject:
   - component: {fileID: 4266862852629921568}
   - component: {fileID: 7861738367907172112}
   - component: {fileID: 8942336367240398544}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
