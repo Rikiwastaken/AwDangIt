@@ -10,12 +10,13 @@ public class TimestopManager : MonoBehaviour
     private InputAction _cursorAction;
     private InputAction _shootAction;
 
-    private List<Building> _childBuildings = new List<Building>();
+    private readonly List<Building> _childBuildings = new List<Building>();
     
     public Vector2Int levelSize;
     
     public Building selectedBuilding;
     public Camera mainCamera;
+    public ArrowSelectIdle arrowSelect;
     
     // Start is called before the first frame update
     void Start()
@@ -49,7 +50,13 @@ public class TimestopManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("BuildingCollider")))
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                selectedBuilding = hit.collider.transform.parent.GetComponent<Building>();
+                Building aimedBuilding = hit.collider.transform.parent.GetComponent<Building>();
+                if (!aimedBuilding.playerRidden)
+                {
+                    selectedBuilding = aimedBuilding;
+                    arrowSelect.gameObject.SetActive(true);
+                }
+                
             }
         }
         
@@ -57,6 +64,7 @@ public class TimestopManager : MonoBehaviour
         
         if (selectedBuilding)
         {
+            arrowSelect.position = selectedBuilding.transform.position + new Vector3(0, 20.0f, 0);
             if (moveDir.x != 0 && _oldMoveDir.x == 0)
             {
                 selectedBuilding.MoveBuilding(new Vector2Int((int) moveDir.x, 0));

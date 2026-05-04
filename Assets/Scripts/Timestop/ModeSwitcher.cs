@@ -42,10 +42,12 @@ public class ModeSwitcher : MonoBehaviour
         if (inTimestop)
         {
             Cursor.lockState = CursorLockMode.None;
+            _timestopManager.selectedBuilding = null;
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
+            _timestopManager.arrowSelect.gameObject.SetActive(false);
         }
     }
 }
