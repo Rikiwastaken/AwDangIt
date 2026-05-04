@@ -21,7 +21,8 @@ public class MovementScript : MonoBehaviour
     private Animator animator;
 
     [Header("Movement Variables")]
-    public float speed;
+    public float groundSpeed;
+    public float airborneSpeed;
 
     [Header("Camera Variables")]
     public float sensitivityX = 15f;
@@ -63,8 +64,8 @@ public class MovementScript : MonoBehaviour
 
         // Camera
 
-        float mouseX = mouseDelta.x * sensitivityX * Time.deltaTime;
-        float mouseY = mouseDelta.y * sensitivityY * Time.deltaTime;
+        float mouseX = mouseDelta.x * sensitivityX;
+        float mouseY = mouseDelta.y * sensitivityY;
 
 
         rotationX -= mouseY;
@@ -79,6 +80,11 @@ public class MovementScript : MonoBehaviour
 
         if (MoveValue.magnitude != 0)
         {
+            float speed = airborneSpeed;
+            if (groundDetectionScript.grounded)
+            {
+                speed = groundSpeed;
+            }
             Vector3 movement = Vector3.zero;
             movement = new Vector3(MoveValue.x * speed, 0.0f, MoveValue.y * speed);
 
@@ -135,18 +141,18 @@ public class MovementScript : MonoBehaviour
         }
         else
         {
-            if (justjumpedcounter > 0)
-            {
-                if (doublejumpavailable)
-                {
-                    rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed, rb.velocity.z);
-                }
-                else
-                {
-                    rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed * DoubleJumpSpeedRatio, rb.velocity.z);
-                }
-
-            }
+            // if (justjumpedcounter > 0)
+            // {
+            //     if (doublejumpavailable)
+            //     {
+            //         rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed, rb.velocity.z);
+            //     }
+            //     else
+            //     {
+            //         rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed * DoubleJumpSpeedRatio, rb.velocity.z);
+            //     }
+            //
+            // }
 
             if (pressedjump)
             {
