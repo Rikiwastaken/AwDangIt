@@ -45,16 +45,16 @@ Material:
     - _AngleOffset: 15
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _CellDensity: 0.63
-    - _Metallic: 0.8
+    - _CellDensity: 12
+    - _Metallic: 0.4
     - _SimpleNoiseIntensity: 600
     - _Smoothness: 0
     - _StainAngleOffset: 15
-    - _StainCellDensity: 0.63
+    - _StainCellDensity: 25
     - _StainSimpleNoiseIntensity: 264.2
-    - _StainStepIntensity: 0.35
+    - _StainStepIntensity: 0.4
     - _StepIntensity: 0.4
     m_Colors:
-    - _MossColor: {r: 0.0178583, g: 0.28930807, b: 0.00454884, a: 0}
-    - _StainColor: {r: 0.37106907, g: 0, b: 0.33032167, a: 1}
+    - _MossColor: {r: 0.023261838, g: 0.4245283, b: 0, a: 0}
+    - _StainColor: {r: 0.6289309, g: 0, b: 0.754717, a: 1}
   m_BuildTextureStacks: []
