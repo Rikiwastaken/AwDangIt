@@ -8,10 +8,13 @@ public class ModeSwitcher : MonoBehaviour
     private TimestopManager _timestopManager;
 
     public CinemachineVirtualCamera timestopCamera;
-    public MovementScript movementScript;
-    public CinemachineVirtualCamera movementCamera;
-    public GroundDetectionScript movementGrounded;
-    public Rigidbody movementRigid;
+    public GameObject character;
+    
+    private MovementScript _movementScript;
+    private CinemachineVirtualCamera _movementCamera;
+    private GroundDetectionScript _movementGrounded;
+    private Rigidbody _movementRigid;
+    private GunController _gunController;
 
     public bool inTimestop = false;
     // Start is called before the first frame update
@@ -19,13 +22,20 @@ public class ModeSwitcher : MonoBehaviour
     {
         _modeSwitchInput = InputSystem.actions.FindAction("ModeSwitch");
         _timestopManager = GetComponent<TimestopManager>();
+
+        _movementScript = character.GetComponent<MovementScript>();
+        _movementCamera = character.GetComponentInChildren<CinemachineVirtualCamera>();
+        _movementGrounded = character.GetComponentInChildren<GroundDetectionScript>();
+        _movementRigid = character.GetComponent<Rigidbody>();
+        _gunController = character.GetComponent<GunController>();
+        
         InitMode();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_modeSwitchInput.WasPressedThisFrame() && movementGrounded.grounded && movementRigid.velocity.magnitude <= 0.1f)
+        if (_modeSwitchInput.WasPressedThisFrame() && _movementGrounded.grounded && _movementRigid.velocity.magnitude <= 0.1f)
         {
             inTimestop = !inTimestop;
             InitMode();
@@ -36,8 +46,9 @@ public class ModeSwitcher : MonoBehaviour
     {
         _timestopManager.enabled = inTimestop;
         timestopCamera.enabled = inTimestop;
-        movementScript.enabled = !inTimestop;
-        movementCamera.enabled = !inTimestop;
+        _movementScript.enabled = !inTimestop;
+        _movementCamera.enabled = !inTimestop;
+        _gunController.enabled = !inTimestop;
         if (inTimestop)
         {
             Cursor.lockState = CursorLockMode.None;

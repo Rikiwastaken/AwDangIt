@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GoalTracker : MonoBehaviour
 {
+    public LevelEnd levelEnd;
+    
     private TargetTracker[] _allTrackers;
     
     // Start is called before the first frame update
@@ -28,8 +30,9 @@ public class GoalTracker : MonoBehaviour
 
         if (levelFinished)
         {
-            Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene("Scenes/LevelSelect", LoadSceneMode.Single);
+            // Cursor.lockState = CursorLockMode.None;
+            // SceneManager.LoadScene("Scenes/LevelSelect", LoadSceneMode.Single);
+            levelEnd.Open();
         }
     }
 }

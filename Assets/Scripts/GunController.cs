@@ -9,6 +9,9 @@ public class GunController : MonoBehaviour
     public GameObject bulletHolePrefab;
     public Transform spawnTransform;
 
+    [Header("Gun Properties")]
+    public float falloffDistance;
+
     private InputAction _shootAction;
 
     private void Start()
@@ -28,7 +31,7 @@ public class GunController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(spawnTransform.transform.position,
                     spawnTransform.transform.forward,
-                    out hit, Mathf.Infinity, LayerMask.GetMask("Ground", "Target")))
+                    out hit, falloffDistance, LayerMask.GetMask("Ground", "Target")))
             {
                 if (hit.collider.gameObject.layer == 6)
                 {

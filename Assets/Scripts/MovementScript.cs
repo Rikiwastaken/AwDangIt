@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -53,6 +54,11 @@ public class MovementScript : MonoBehaviour
     public float timetosetweight;
     private float lastweight;
     private PostProcessVolume volume;
+
+    public void OnDisable()
+    {
+        rb.velocity = Vector3.zero;
+    }
 
     // Start is called before the first frame update
     void Start()
