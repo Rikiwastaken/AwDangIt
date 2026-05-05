@@ -9,12 +9,6 @@ public class TimerScript : MonoBehaviour
     private float timerVal;
     private bool timerisPlaying;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
