@@ -19,6 +19,7 @@ public class MaterialModificator : MonoBehaviour
         FillMaterialList(gameObject, materialsList);
         SetCorruption(0f);
         SetVegetation(0f);
+        StartCoroutine(SetVegetationToValue(1.0f));
     }
 
     // Update is called once per frame
