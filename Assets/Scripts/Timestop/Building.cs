@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using Constants;
 using Unity.VisualScripting;
@@ -8,11 +9,14 @@ using UnityEngine.InputSystem;
 
 public class Building : MonoBehaviour
 {
-    public List<Vector2Int> gridSpots;
+    [Header("level data")]
     public Vector2Int gridPosition;
-    public bool playerRidden;
     
-    private TimestopManager _timestopManager;
+    [Header("building data")]
+    public List<Vector2Int> gridSpots;
+    
+    [Header("debug")]
+    public bool playerRidden;
 
     public bool MoveBuilding(Vector2Int delta)
     {
@@ -34,10 +38,10 @@ public class Building : MonoBehaviour
         }
         
         bool validMove = true;
-        List<Vector2Int> allPositions = _timestopManager.GetAllBuildingPositions();
+        List<Vector2Int> allPositions = TimestopManager.Instance.GetAllBuildingPositions();
         foreach (var p in projectedGridPosition)
         {
-            if (p.x < 0 || p.y < 0 || p.x >= _timestopManager.levelSize.x || p.y >= _timestopManager.levelSize.y || (allPositions.Contains(p) && !oldGridPosition.Contains(p)))
+            if (p.x < 0 || p.y < 0 || p.x >= TimestopManager.Instance.levelSize.x || p.y >= TimestopManager.Instance.levelSize.y || (allPositions.Contains(p) && !oldGridPosition.Contains(p)))
             {
                 validMove = false;
                 break;
@@ -55,12 +59,6 @@ public class Building : MonoBehaviour
         }
 
         return validMove;
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        _timestopManager = transform.parent.gameObject.GetComponent<TimestopManager>();
     }
     
 #if UNITY_EDITOR

@@ -18,8 +18,7 @@ public class MaterialModificator : MonoBehaviour
         materialsList = new List<Material>();
         FillMaterialList(gameObject, materialsList);
         SetCorruption(0f);
-        SetVegetation(0f);
-        StartCoroutine(SetVegetationToValue(1.0f));
+        SetVegetation(0.5f);
     }
 
     // Update is called once per frame
@@ -28,7 +27,7 @@ public class MaterialModificator : MonoBehaviour
 
     }
 
-    private IEnumerator SetVegetationToValue(float targetpercent)
+    public IEnumerator SetVegetationToValue(float targetpercent)
     {
         float targetTime = Time.time + timetosetVeg;
         float clampedpercent = targetpercent * maxveg;
@@ -46,7 +45,7 @@ public class MaterialModificator : MonoBehaviour
         }
     }
 
-    private void SetVegetation(float value)
+    public void SetVegetation(float value)
     {
         foreach (Material mat in materialsList)
         {
@@ -54,7 +53,7 @@ public class MaterialModificator : MonoBehaviour
         }
     }
 
-    private IEnumerator SetCorruptionToValue(float targetpercent)
+    public IEnumerator SetCorruptionToValue(float targetpercent)
     {
         float clampedpercent = targetpercent * maxCorruption;
 
@@ -63,7 +62,6 @@ public class MaterialModificator : MonoBehaviour
             FillMaterialList(gameObject, materialsList);
         }
         float basecorruption = GetCorruption();
-        Debug.Log(basecorruption);
         float timeelapsed = 0f;
         while (timeelapsed < timetosetCorruption)
         {
@@ -76,7 +74,7 @@ public class MaterialModificator : MonoBehaviour
         }
     }
 
-    private void SetCorruption(float value)
+    public void SetCorruption(float value)
     {
         foreach (Material mat in materialsList)
         {
@@ -84,7 +82,7 @@ public class MaterialModificator : MonoBehaviour
         }
     }
 
-    private float GetVegetation()
+    public float GetVegetation()
     {
         if (materialsList != null && materialsList.Count > 0)
         {
@@ -93,7 +91,7 @@ public class MaterialModificator : MonoBehaviour
         return 0f;
     }
 
-    private float GetCorruption()
+    public float GetCorruption()
     {
         if (materialsList != null && materialsList.Count > 0)
         {

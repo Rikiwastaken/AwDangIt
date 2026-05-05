@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class GunController : MonoBehaviour
 {
+    public static GunController Instance { get; private set; }
+    
     public GameObject bulletHolePrefab;
     public Transform spawnTransform;
 
@@ -14,6 +16,11 @@ public class GunController : MonoBehaviour
 
     private InputAction _shootAction;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+    
     private void Start()
     {
         _shootAction = InputSystem.actions.FindAction("Shoot");
