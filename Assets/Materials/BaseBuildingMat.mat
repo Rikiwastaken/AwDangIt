@@ -42,18 +42,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AngleOffset: 15
+    - _AngleOffset: 17
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _CellDensity: 12
+    - _CellDensity: 7
     - _Metallic: 0.4
     - _SimpleNoiseIntensity: 600
     - _Smoothness: 0
     - _StainAngleOffset: 15
-    - _StainCellDensity: 25
+    - _StainCellDensity: 16
     - _StainSimpleNoiseIntensity: 264.2
-    - _StainStepIntensity: 0.4
-    - _StepIntensity: 0.4
+    - _StainStepIntensity: 0.5
+    - _StepIntensity: 0.5
     m_Colors:
     - _MossColor: {r: 0.023261838, g: 0.4245283, b: 0, a: 0}
     - _StainColor: {r: 0.6289309, g: 0, b: 0.754717, a: 1}

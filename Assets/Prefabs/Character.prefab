@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletHolePrefab: {fileID: 2503116845759288200, guid: 6bf367fabb5f343e3b6c26116f5574b3, type: 3}
   spawnTransform: {fileID: 639498271886790501}
-  falloffDistance: 32
+  falloffDistance: 24
 --- !u!1 &2410218130839335107
 GameObject:
   m_ObjectHideFlags: 0
