@@ -7,6 +7,9 @@ public class ModeSwitcher : MonoBehaviour
     private InputAction _modeSwitchInput;
     private TimestopManager _timestopManager;
 
+    public int switches = 0;
+    public int switchLimit = 3;
+    
     public CinemachineVirtualCamera timestopCamera;
     public GameObject character;
     
@@ -35,7 +38,7 @@ public class ModeSwitcher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_modeSwitchInput.WasPressedThisFrame() && _movementGrounded.grounded && _movementRigid.velocity.magnitude <= 0.1f)
+        if (_modeSwitchInput.WasPressedThisFrame() && _movementGrounded.grounded && _movementRigid.velocity.magnitude <= 0.1f && switches < switchLimit)
         {
             inTimestop = !inTimestop;
             InitMode();
@@ -53,11 +56,16 @@ public class ModeSwitcher : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             _timestopManager.selectedBuilding = null;
+            _timestopManager.buildingMoved = false;
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
             _timestopManager.arrowSelect.gameObject.SetActive(false);
+            if (_timestopManager.buildingMoved)
+            {
+                switches++;
+            }
         }
     }
 }

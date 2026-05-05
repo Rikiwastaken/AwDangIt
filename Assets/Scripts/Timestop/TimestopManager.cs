@@ -19,6 +19,9 @@ public class TimestopManager : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera;
     public ArrowSelectIdle arrowSelect;
 
+    public bool buildingMoved = false;
+    public int moves = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +33,7 @@ public class TimestopManager : MonoBehaviour
         virtualCamera.transform.localPosition = new Vector3(
             Constants.TimestopConstants.GridSize * (levelSize.x / 2.0f - 0.5f),
             300.0f,
-            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f) - 100.0f
+            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f) - 70.0f
         );
 
         foreach (Transform child in transform)
@@ -65,14 +68,21 @@ public class TimestopManager : MonoBehaviour
 
         if (selectedBuilding)
         {
+            bool validMove = false;
             arrowSelect.position = selectedBuilding.transform.position + new Vector3(0, 20.0f, 0);
             if (moveDir.x != 0 && _oldMoveDir.x == 0)
             {
-                selectedBuilding.MoveBuilding(new Vector2Int((int)moveDir.x, 0));
+                validMove = selectedBuilding.MoveBuilding(new Vector2Int((int)moveDir.x, 0));
             }
             if (moveDir.y != 0 && _oldMoveDir.y == 0)
             {
-                selectedBuilding.MoveBuilding(new Vector2Int(0, (int)moveDir.y));
+                validMove = selectedBuilding.MoveBuilding(new Vector2Int(0, (int)moveDir.y));
+            }
+
+            if (validMove)
+            {
+                buildingMoved = true;
+                moves++;
             }
         }
 

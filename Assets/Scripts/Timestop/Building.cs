@@ -14,11 +14,11 @@ public class Building : MonoBehaviour
     
     private TimestopManager _timestopManager;
 
-    public void MoveBuilding(Vector2Int delta)
+    public bool MoveBuilding(Vector2Int delta)
     {
         if (playerRidden)
         {
-            return;
+            return false;
         }
         
         List<Vector2Int> oldGridPosition = gridSpots.Clone(new ListCloner(), false);
@@ -53,7 +53,8 @@ public class Building : MonoBehaviour
                 transform.localPosition.z + delta.y * Constants.TimestopConstants.GridSize
             );
         }
-        
+
+        return validMove;
     }
     
     // Start is called before the first frame update
