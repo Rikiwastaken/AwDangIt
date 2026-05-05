@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class GunController : MonoBehaviour
 {
     public GameObject bulletHolePrefab;
-    public Camera playerCamera;
+    public Transform spawnTransform;
 
     private InputAction _shootAction;
 
@@ -26,12 +26,21 @@ public class GunController : MonoBehaviour
             // o.transform.eulerAngles = new Vector3(playerCamera.transform.eulerAngles.x, transform.eulerAngles.y, 0);
             
             RaycastHit hit;
-            if (Physics.Raycast(playerCamera.transform.position,
-                    playerCamera.transform.forward,
-                    out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+            if (Physics.Raycast(spawnTransform.transform.position,
+                    spawnTransform.transform.forward,
+                    out hit, Mathf.Infinity, LayerMask.GetMask("Ground", "Target")))
             {
-                GameObject o = Instantiate(bulletHolePrefab);
-                o.transform.position = hit.point;
+                if (hit.collider.gameObject.layer == 6)
+                {
+                    GameObject o = Instantiate(bulletHolePrefab);
+                    o.transform.position = hit.point;
+                }
+                else if (hit.collider.gameObject.layer == 9)
+                {
+                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                    Target t = hit.collider.gameObject.GetComponent<Target>();
+                    t.Hit();
+                }
             }
         }
     }

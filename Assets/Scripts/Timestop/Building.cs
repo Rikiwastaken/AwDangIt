@@ -61,12 +61,6 @@ public class Building : MonoBehaviour
     {
         _timestopManager = transform.parent.gameObject.GetComponent<TimestopManager>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
 #if UNITY_EDITOR
     [ContextMenu("Calculate real position")]
