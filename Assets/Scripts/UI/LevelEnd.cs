@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,17 +7,26 @@ using UnityEngine.SceneManagement;
 
 public class LevelEnd : MonoBehaviour
 {
-    [Header("accessors")]
-    public GameObject character;
-    public ModeSwitcher modeSwitcher;
-    public TimestopManager timestopManager;
+    public static LevelEnd Instance { get; private set; }
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     [Header("text")]
+    public TMP_Text timeText;
     public TMP_Text timestopText;
     public TMP_Text movesText;
-    
+
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void Open()
     {
+        GameObject character = MovementScript.Instance.gameObject;
+        
         gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
@@ -24,8 +34,11 @@ public class LevelEnd : MonoBehaviour
         // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
         character.GetComponent<GunController>().enabled = false;
 
-        timestopText.text = "Timestops used: " + modeSwitcher.switches;
-        movesText.text = "Moves: " + timestopManager.moves;
+        TimerScript.Instance.PauseTimer();
+
+        timeText.text = "Time: " + TimerScript.TimeToString(TimerScript.Instance.timerVal);
+        timestopText.text = "Timestops used: " + ModeSwitcher.Instance.switches;
+        movesText.text = "Moves: " + TimestopManager.Instance.moves;
     }
     
     public void LevelSelect()

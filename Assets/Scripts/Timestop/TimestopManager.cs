@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class TimestopManager : MonoBehaviour
 {
+    public static TimestopManager Instance { get; private set; }
+    
     private InputAction _moveAction;
     private Vector2 _oldMoveDir;
     private InputAction _cursorAction;
@@ -12,16 +14,23 @@ public class TimestopManager : MonoBehaviour
 
     private List<Building> _childBuildings = new List<Building>();
 
+    [Header("level data")]
     public Vector2Int levelSize;
-
-    public Building selectedBuilding;
+    
+    [Header("accessors")]
     public Camera mainCamera;
     public CinemachineVirtualCamera virtualCamera;
-    public ArrowSelectIdle arrowSelect;
 
+    [Header("public variables (debug)")]
+    public Building selectedBuilding;
     public bool buildingMoved = false;
     public int moves = 0;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +67,7 @@ public class TimestopManager : MonoBehaviour
                 if (!aimedBuilding.playerRidden)
                 {
                     selectedBuilding = aimedBuilding;
-                    arrowSelect.gameObject.SetActive(true);
+                    ArrowSelectIdle.Instance.gameObject.SetActive(true);
                 }
 
             }
@@ -69,7 +78,7 @@ public class TimestopManager : MonoBehaviour
         if (selectedBuilding)
         {
             bool validMove = false;
-            arrowSelect.position = selectedBuilding.transform.position + new Vector3(0, 20.0f, 0);
+            ArrowSelectIdle.Instance.position = selectedBuilding.transform.position + new Vector3(0, 20.0f, 0);
             if (moveDir.x != 0 && _oldMoveDir.x == 0)
             {
                 validMove = selectedBuilding.MoveBuilding(new Vector2Int((int)moveDir.x, 0));

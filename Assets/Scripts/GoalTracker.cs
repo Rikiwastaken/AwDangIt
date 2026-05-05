@@ -5,9 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GoalTracker : MonoBehaviour
 {
-    public LevelEnd levelEnd;
     
     private TargetTracker[] _allTrackers;
+
+    public static GoalTracker Instance { get; private set; }
+    
+    private void Awake()
+    {
+        Instance = this;
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -28,11 +34,22 @@ public class GoalTracker : MonoBehaviour
             }
         }
 
-        if (levelFinished)
+        if (levelFinished && !LevelEnd.Instance.gameObject.activeSelf)
         {
             // Cursor.lockState = CursorLockMode.None;
             // SceneManager.LoadScene("Scenes/LevelSelect", LoadSceneMode.Single);
-            levelEnd.Open();
+            LevelEnd.Instance.Open();
         }
+    }
+
+    public int GetRemaining()
+    {
+        int remaining = 0;
+        foreach (var tracker in _allTrackers)
+        {
+            remaining += tracker.targets;
+        }
+
+        return remaining;
     }
 }

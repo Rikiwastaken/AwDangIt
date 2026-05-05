@@ -19,13 +19,11 @@ public class TargetTracker : MonoBehaviour
     {
         if (!_corrupted && targets > 0)
         {
-            Debug.Log("corrupted");
             StartCoroutine(_materialModificator.SetCorruptionToValue(1.0f));
             _corrupted = true;
         }
         if (_corrupted && targets == 0)
         {
-            Debug.Log("no longer");
             StartCoroutine(_materialModificator.SetCorruptionToValue(0.0f));
             _corrupted = false;
         }

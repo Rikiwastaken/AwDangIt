@@ -6,7 +6,8 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class MovementScript : MonoBehaviour
 {
-
+    public static MovementScript Instance { get; private set; }
+    
     private Vector2 MoveValue;
     private InputAction MoveInputaction;
 
@@ -60,6 +61,11 @@ public class MovementScript : MonoBehaviour
         rb.velocity = Vector3.zero;
     }
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+    
     // Start is called before the first frame update
     void Start()
     {

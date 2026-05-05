@@ -1,13 +1,25 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class TimerScript : MonoBehaviour
 {
-
+    public static TimerScript Instance { get; private set; }
+    
     public TextMeshProUGUI TimerTMP;
 
-    private float timerVal;
+    public float timerVal;
     private bool timerisPlaying;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+    
+    private void Start()
+    {
+        StartTimer();
+    }
 
     // Update is called once per frame
     void Update()
@@ -41,19 +53,35 @@ public class TimerScript : MonoBehaviour
         timerisPlaying = true;
     }
 
-    private string TimeToString(float timer = 0f)
+    public static string TimeToString(float timer = 0f)
     {
-        string seconds = (int)(timer % 60) + "";
-        if (seconds.Length == 1)
+        // string seconds = (int)(timer % 60) + "";
+        // if (seconds.Length == 1)
+        // {
+        //     seconds = "0" + seconds;
+        // }
+        //
+        // string rest = "" + ((float)(timer % 60) - (float)((int)(timer % 60)));
+        //
+        //
+        // rest = rest.Substring(1, 3);
+        //
+        // return ((int)timer / 60) + ":" + seconds + rest;
+
+        TimeSpan ts = TimeSpan.FromSeconds(timer);
+
+        string format = "s\\.fff";
+        if (timer > 60)
         {
-            seconds = "0" + seconds;
+            format = "m\\:s" + format;
         }
 
-        string rest = "" + ((float)(timer % 60) - (float)((int)(timer % 60)));
-
-        rest = rest.Substring(1, 3);
-
-        return ((int)timer / 60) + ":" + seconds + rest;
+        if (timer > 60 * 60)
+        {
+            format = "h\\:m" + format;
+        }
+        
+        return ts.ToString(format);
     }
 
 #if UNITY_EDITOR
