@@ -40,7 +40,7 @@ public class GunController : MonoBehaviour
                     spawnTransform.transform.forward,
                     out hit, falloffDistance, LayerMask.GetMask("Ground", "Target")))
             {
-                if (hit.collider.gameObject.layer == 6)
+                if (hit.collider.gameObject.layer == 6 && bulletHolePrefab)
                 {
                     GameObject o = Instantiate(bulletHolePrefab);
                     o.transform.position = hit.point;
