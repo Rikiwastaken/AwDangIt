@@ -13,7 +13,6 @@ public class GunController : MonoBehaviour
 
     private InputAction _shootAction;
     public GameObject LaserPrefab;
-    public Transform DroneTransform;
 
     private GameObject PreviousLaser;
 
@@ -39,9 +38,9 @@ public class GunController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(spawnTransform.transform.position,
                     spawnTransform.transform.forward,
-                    out hit, falloffDistance, LayerMask.GetMask("Ground", "Target")))
+                    out hit, falloffDistance))
             {
-                if (hit.collider.gameObject.layer == 6)
+                if (hit.collider.gameObject.layer == 6 && bulletHolePrefab)
                 {
                     GameObject o = Instantiate(bulletHolePrefab);
                     o.transform.position = hit.point;
@@ -64,6 +63,7 @@ public class GunController : MonoBehaviour
             PreviousLaser = Instantiate(LaserPrefab);
         }
 
+        Transform DroneTransform = DroneFollow.Instance.transform;
         PreviousLaser.GetComponent<LaserScript>().ResetMat();
         PreviousLaser.transform.position = (DroneTransform.position + hitposition) / 2f;
         PreviousLaser.transform.up = (hitposition - DroneTransform.position).normalized;

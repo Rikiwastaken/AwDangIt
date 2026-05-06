@@ -18,7 +18,6 @@ public class MovementScript : MonoBehaviour
 
 
     private CharacterController cc;
-    private Vector3 velocity;
 
     private Transform CameraTransform;
 
@@ -56,10 +55,13 @@ public class MovementScript : MonoBehaviour
     private float lastweight;
     private PostProcessVolume volume;
 
+    [Header("extern")]
+    public Vector3 droneTarget;
+    
     [Header("debug")]
+    public Vector3 velocity;
     public Building lastBuilding;
-
-    private GrappleController GrappleController;
+    
     public void OnDisable()
     {
         velocity = Vector3.zero;
@@ -85,7 +87,6 @@ public class MovementScript : MonoBehaviour
         CameraTransform = GetComponentInChildren<CinemachineVirtualCamera>().transform;
         volume = FindAnyObjectByType<PostProcessVolume>();
         animator = GetComponentInChildren<Animator>();
-        GrappleController = GetComponent<GrappleController>();
     }
 
     // Update is called once per frame
@@ -159,6 +160,7 @@ public class MovementScript : MonoBehaviour
         {
             jumpavailable = true;
             doublejumpavailable = true;
+            velocity = new Vector3(velocity.x, -1, velocity.z); //i don't want to know why it has to fall
         }
         else
         {
@@ -213,7 +215,16 @@ public class MovementScript : MonoBehaviour
             }
 
         }
-        if (!GrappleController.Isgrappling)
+
+        Vector3 projected = velocity;
+        projected.y = 0;
+        projected.Normalize();
+        if (projected.magnitude != 0)
+        {
+            droneTarget = transform.position - projected * 2.5f + transform.up * 2.5f;
+        }
+        
+        if (!GrappleController.Instance.Isgrappling)
         {
             cc.Move(velocity * Time.deltaTime);
         }
@@ -223,7 +234,7 @@ public class MovementScript : MonoBehaviour
 
         if (cc.isGrounded)
         {
-            if (!previousgrounded)
+            if (!previousgrounded && velocity.y < -10)
             {
                 animator.Play("Fall To Roll");
             }
@@ -241,8 +252,8 @@ public class MovementScript : MonoBehaviour
         previousgrounded = cc.isGrounded;
 
         // bob
-
-
+        
+        
         // post precessing
 
         float magnitude = velocity.magnitude / minspeedforpostprocessing;

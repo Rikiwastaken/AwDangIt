@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e6712469d28e761888c8234ae42ccf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelEnd: {fileID: 0}
 --- !u!114 &8890880084095894004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,8 +61,9 @@ MonoBehaviour:
   switches: 0
   switchLimit: 3
   timestopCamera: {fileID: 0}
-  character: {fileID: 0}
+  crosshair: {fileID: 0}
   inTimestop: 0
+  playerHasControl: 0
 --- !u!114 &9194392034802012107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,15 +71,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 246704061414155077}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 486445d1f4788a40aab42e5ac748146c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   levelSize: {x: 5, y: 5}
-  selectedBuilding: {fileID: 0}
+  averageHeight: 0
   mainCamera: {fileID: 0}
   virtualCamera: {fileID: 0}
-  arrowSelect: {fileID: 0}
+  control: 0
+  selectedBuilding: {fileID: 0}
   buildingMoved: 0
   moves: 0

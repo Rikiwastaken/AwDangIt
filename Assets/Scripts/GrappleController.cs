@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,12 @@ using UnityEngine.InputSystem;
 
 public class GrappleController : MonoBehaviour
 {
+    public static GrappleController Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private GameObject[] grapplepointList;
 

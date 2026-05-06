@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,26 +6,28 @@ using UnityEngine.InputSystem;
 public class ModeSwitcher : MonoBehaviour
 {
     public static ModeSwitcher Instance { get; private set; }
+
     private void Awake()
     {
         Instance = this;
     }
-    
+
+    private List<Building> _childBuildings = new List<Building>();
     private InputAction _modeSwitchInput;
 
-    [Header("level data")]
-    public int switches = 0;
+    [Header("level data")] public int switches = 0;
     public int switchLimit = 3;
-    
-    [Header("accessors")]
-    public CinemachineVirtualCamera timestopCamera;
-    public GameObject crosshair;
-    
-    private CinemachineVirtualCamera _movementCamera;
-    private Rigidbody _movementRigid;
 
-    [Header("debug")]
-    public bool inTimestop = false;
+    [Header("accessors")] public CinemachineVirtualCamera timestopCamera;
+    public GameObject crosshair;
+
+    private CinemachineVirtualCamera _movementCamera;
+
+    [Header("debug")] public bool inTimestop = false;
+    public bool playerHasControl = false;
+
+    private float _regainControlAt = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,43 +35,113 @@ public class ModeSwitcher : MonoBehaviour
 
         GameObject character = MovementScript.Instance.gameObject;
         _movementCamera = character.GetComponentInChildren<CinemachineVirtualCamera>();
-        _movementRigid = character.GetComponent<Rigidbody>();
+
+        foreach (Transform child in transform)
+        {
+            Building building = child.gameObject.GetComponent<Building>();
+            _childBuildings.Add(building);
+        }
         
-        InitMode();
+        ExitTimestop();
+        EnterMovement();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_modeSwitchInput.WasPressedThisFrame() && MovementScript.Instance.IsGrounded() && _movementRigid.velocity.magnitude <= 0.1f && switches < switchLimit)
+        if (playerHasControl)
         {
-            inTimestop = !inTimestop;
-            InitMode();
-        }
-    }
-
-    void InitMode()
-    {
-        TimestopManager.Instance.enabled = inTimestop;
-        timestopCamera.enabled = inTimestop;
-        crosshair.SetActive(!inTimestop);
-        MovementScript.Instance.enabled = !inTimestop;
-        _movementCamera.enabled = !inTimestop;
-        GunController.Instance.enabled = !inTimestop;
-        if (inTimestop)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            TimestopManager.Instance.selectedBuilding = null;
-            TimestopManager.Instance.buildingMoved = false;
+            if (!inTimestop)
+            {
+                Vector3 horiz = MovementScript.Instance.velocity;
+                horiz.y = 0;
+                if (_modeSwitchInput.WasPressedThisFrame() && MovementScript.Instance.IsGrounded() &&
+                    horiz.magnitude <= 0.1f && switches < switchLimit)
+                {
+                    ExitMovement();
+                    
+                    _regainControlAt = Time.time + 0.5f;
+                }
+            }
+            else
+            {
+                if (_modeSwitchInput.WasPressedThisFrame())
+                {
+                    ExitTimestop();
+                    
+                    _regainControlAt = Time.time + 0.5f;
+                }
+            }
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            ArrowSelectIdle.Instance.gameObject.SetActive(false);
-            if (TimestopManager.Instance.buildingMoved)
+            if (Time.time > _regainControlAt)
             {
-                switches++;
+                playerHasControl = true;
+
+                if (inTimestop)
+                {
+                    EnterTimestop();
+                }
+                else
+                {
+                    EnterMovement();
+                }
             }
+        }
+    }
+
+    private void EnterMovement()
+    {
+        crosshair.SetActive(true);
+        MovementScript.Instance.enabled = true;
+        GunController.Instance.enabled = true;
+        TimerScript.Instance.UnPauseTimer();
+    }
+
+    private void ExitMovement()
+    {
+        inTimestop = true;
+        playerHasControl = false;
+        timestopCamera.enabled = true;
+        _movementCamera.enabled = false;
+        crosshair.SetActive(false);
+        MovementScript.Instance.enabled = false;
+        GunController.Instance.enabled = false;
+        TimerScript.Instance.PauseTimer();
+    }
+
+    private void EnterTimestop()
+    {
+        TimestopManager.Instance.control = true;
+        TimestopManager.Instance.selectedBuilding = null;
+        TimestopManager.Instance.buildingMoved = false;
+        GridGenerator.Instance.gridSectionsHolder.SetActive(true);
+        foreach (var b in _childBuildings)
+        {
+            b.ShowSelector();
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void ExitTimestop()
+    {
+        inTimestop = false;
+        TimestopManager.Instance.control = false;
+        playerHasControl = false;
+        timestopCamera.enabled = false;
+        _movementCamera.enabled = true;
+        GridGenerator.Instance.gridSectionsHolder.SetActive(false);
+        foreach (var b in _childBuildings)
+        {
+            b.HideSelector();
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        if (TimestopManager.Instance.buildingMoved)
+        {
+            switches++;
         }
     }
 }
