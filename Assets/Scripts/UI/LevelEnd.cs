@@ -25,14 +25,12 @@ public class LevelEnd : MonoBehaviour
 
     public void Open()
     {
-        GameObject character = MovementScript.Instance.gameObject;
-        
         gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        MovementScript.Instance.enabled = false;
+        GunController.Instance.enabled = false;
         // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-        character.GetComponent<MovementScript>().enabled = false;
-        // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-        character.GetComponent<GunController>().enabled = false;
+        MovementScript.Instance.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
 
         TimerScript.Instance.PauseTimer();
 
