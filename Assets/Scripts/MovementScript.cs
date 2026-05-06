@@ -56,6 +56,9 @@ public class MovementScript : MonoBehaviour
     private float lastweight;
     private PostProcessVolume volume;
 
+    [Header("debug")]
+    public Building lastBuilding;
+
     public void OnDisable()
     {
         rb.velocity = Vector3.zero;
@@ -232,4 +235,15 @@ public class MovementScript : MonoBehaviour
         volume.weight = lastweight;
     }
 
+    public void Respawn()
+    {
+        if (lastBuilding)
+        {
+            transform.position = lastBuilding.transform.position + new Vector3(0,5,0);
+        }
+        else
+        {
+            
+        }
+    }
 }

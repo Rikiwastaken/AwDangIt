@@ -1,7 +1,14 @@
+using System;
 using UnityEngine;
 
 public class GroundDetectionScript : MonoBehaviour
 {
+    public static GroundDetectionScript Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public bool grounded;
 

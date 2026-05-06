@@ -16,6 +16,10 @@ public class RayBox : MonoBehaviour
     {
         if (other.gameObject.layer == 3)
         {
+            if (GroundDetectionScript.Instance.grounded)
+            {
+                MovementScript.Instance.lastBuilding = _building;
+            }
             _building.playerRidden = true;
         }
     }
