@@ -145,6 +145,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
+    - target: {fileID: 1471739936443496390, guid: caf95776d39926fadb7fed91f41c6f0e, type: 3}
+      propertyPath: m_Center.y
+      value: 0.85
+      objectReference: {fileID: 0}
     - target: {fileID: 3331622830407265578, guid: caf95776d39926fadb7fed91f41c6f0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

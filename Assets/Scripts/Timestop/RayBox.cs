@@ -16,7 +16,7 @@ public class RayBox : MonoBehaviour
     {
         if (other.gameObject.layer == 3)
         {
-            if (GroundDetectionScript.Instance.grounded)
+            if (MovementScript.Instance.IsGrounded())
             {
                 MovementScript.Instance.lastBuilding = _building;
             }

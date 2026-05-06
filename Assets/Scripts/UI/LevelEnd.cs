@@ -30,7 +30,7 @@ public class LevelEnd : MonoBehaviour
         MovementScript.Instance.enabled = false;
         GunController.Instance.enabled = false;
         // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-        MovementScript.Instance.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
+        // MovementScript.Instance.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
 
         TimerScript.Instance.PauseTimer();
 
