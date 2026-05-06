@@ -236,6 +236,9 @@ public class MovementScript : MonoBehaviour
 
         previousgrounded = cc.isGrounded;
 
+        // bob
+        
+        
         // post precessing
 
         float magnitude = velocity.magnitude / minspeedforpostprocessing;
