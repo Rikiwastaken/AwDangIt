@@ -21,7 +21,6 @@ public class ModeSwitcher : MonoBehaviour
     public GameObject crosshair;
     
     private CinemachineVirtualCamera _movementCamera;
-    private GroundDetectionScript _movementGrounded;
     private Rigidbody _movementRigid;
 
     [Header("debug")]
@@ -33,7 +32,6 @@ public class ModeSwitcher : MonoBehaviour
 
         GameObject character = MovementScript.Instance.gameObject;
         _movementCamera = character.GetComponentInChildren<CinemachineVirtualCamera>();
-        _movementGrounded = character.GetComponentInChildren<GroundDetectionScript>();
         _movementRigid = character.GetComponent<Rigidbody>();
         
         InitMode();
@@ -42,7 +40,7 @@ public class ModeSwitcher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_modeSwitchInput.WasPressedThisFrame() && _movementGrounded.grounded && _movementRigid.velocity.magnitude <= 0.1f && switches < switchLimit)
+        if (_modeSwitchInput.WasPressedThisFrame() && MovementScript.Instance.IsGrounded() && _movementRigid.velocity.magnitude <= 0.1f && switches < switchLimit)
         {
             inTimestop = !inTimestop;
             InitMode();

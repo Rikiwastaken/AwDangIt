@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class TimestopManager : MonoBehaviour
 
     [Header("level data")]
     public Vector2Int levelSize;
+    public float averageHeight;
     
     [Header("accessors")]
     public Camera mainCamera;
@@ -41,9 +43,14 @@ public class TimestopManager : MonoBehaviour
 
         virtualCamera.transform.localPosition = new Vector3(
             Constants.TimestopConstants.GridSize * (levelSize.x / 2.0f - 0.5f),
-            300.0f,
-            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f) - 70.0f
+            50.0f + Math.Max(levelSize.x, levelSize.y) * 25.0f,
+            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f) - Math.Max(levelSize.x, levelSize.y) * 25.0f
         );
+        virtualCamera.transform.LookAt(new Vector3(
+            Constants.TimestopConstants.GridSize * (levelSize.x / 2.0f - 0.5f),
+            averageHeight,
+            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f)
+        ));
 
         foreach (Transform child in transform)
         {
@@ -64,7 +71,7 @@ public class TimestopManager : MonoBehaviour
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
                 Building aimedBuilding = hit.collider.transform.parent.GetComponent<Building>();
-                if (!aimedBuilding.playerRidden)
+                if (!(aimedBuilding.playerRidden || !aimedBuilding.interactible))
                 {
                     selectedBuilding = aimedBuilding;
                     ArrowSelectIdle.Instance.gameObject.SetActive(true);

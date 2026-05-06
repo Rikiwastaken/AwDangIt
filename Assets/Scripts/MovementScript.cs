@@ -18,9 +18,10 @@ public class MovementScript : MonoBehaviour
     private InputAction JumpInputaction;
 
 
-    private Rigidbody rb;
+    private CharacterController cc;
+    private Vector3 velocity;
+    
     private Transform CameraTransform;
-    private GroundDetectionScript groundDetectionScript;
 
     private Animator animator;
 
@@ -56,14 +57,22 @@ public class MovementScript : MonoBehaviour
     private float lastweight;
     private PostProcessVolume volume;
 
+    [Header("debug")]
+    public Building lastBuilding;
+
     public void OnDisable()
-    {
-        rb.velocity = Vector3.zero;
+    { 
+        velocity = Vector3.zero;
     }
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    public bool IsGrounded()
+    {
+        return cc.isGrounded;
     }
     
     // Start is called before the first frame update
@@ -72,10 +81,9 @@ public class MovementScript : MonoBehaviour
         MoveInputaction = InputSystem.actions.FindAction("Movement");
         MouseInputaction = InputSystem.actions.FindAction("Mouse");
         JumpInputaction = InputSystem.actions.FindAction("Jump");
-        rb = GetComponent<Rigidbody>();
+        cc = GetComponent<CharacterController>();
         CameraTransform = GetComponentInChildren<CinemachineVirtualCamera>().transform;
         volume = FindAnyObjectByType<PostProcessVolume>();
-        groundDetectionScript = GetComponentInChildren<GroundDetectionScript>();
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -105,7 +113,7 @@ public class MovementScript : MonoBehaviour
         if (MoveValue.magnitude != 0)
         {
             float speed = airborneSpeed;
-            if (groundDetectionScript.grounded)
+            if (cc.isGrounded)
             {
                 speed = groundSpeed;
             }
@@ -128,20 +136,17 @@ public class MovementScript : MonoBehaviour
 
 
 
-            movement.y = rb.velocity.y;
+            movement.y = velocity.y;
 
-
-            rb.velocity = movement;
-
-
+            velocity = movement;
         }
         else
         {
-
-            Vector3 targetspeed = new Vector3(0f, rb.velocity.y, 0f);
-            rb.velocity = Vector3.Lerp(rb.velocity, targetspeed, 0.5f);
+            Vector3 targetspeed = new Vector3(0f, velocity.y, 0f);
+            velocity = Vector3.Lerp(velocity, targetspeed, 0.5f);
+            
         }
-        if (groundDetectionScript.grounded)
+        if (cc.isGrounded)
         {
             animator.SetFloat("SpeedX", MoveValue.x * 2f);
             animator.SetFloat("SpeedZ", MoveValue.y * 2f);
@@ -149,10 +154,14 @@ public class MovementScript : MonoBehaviour
 
         // jump
 
-        if (groundDetectionScript.grounded)
+        if (cc.isGrounded)
         {
             jumpavailable = true;
             doublejumpavailable = true;
+        }
+        else
+        {
+            velocity += Physics.gravity * Time.deltaTime;
         }
 
         if (justjumpedcounter > 0)
@@ -168,7 +177,7 @@ public class MovementScript : MonoBehaviour
                 jumpavailable = false;
                 pressedjump = true;
                 justjumpedcounter = (int)(jumpduration / Time.deltaTime);
-                rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed, rb.velocity.z);
+                velocity = new Vector3(velocity.x, JumpVerticalSpeed, velocity.z);
                 animator.Play("Jump");
 
             }
@@ -178,7 +187,7 @@ public class MovementScript : MonoBehaviour
                 doublejumpavailable = false;
                 pressedjump = true;
                 justjumpedcounter = (int)(jumpduration / Time.deltaTime);
-                rb.velocity = new Vector3(rb.velocity.x, JumpVerticalSpeed * DoubleJumpSpeedRatio, rb.velocity.z);
+                velocity = new Vector3(velocity.x, JumpVerticalSpeed * DoubleJumpSpeedRatio, velocity.z);
                 animator.Play("DoubleJump");
             }
         }
@@ -204,9 +213,11 @@ public class MovementScript : MonoBehaviour
 
         }
 
+        cc.Move(velocity * Time.deltaTime);
+
         // animations
 
-        if (groundDetectionScript.grounded)
+        if (cc.isGrounded)
         {
             if (!previousgrounded)
             {
@@ -223,13 +234,24 @@ public class MovementScript : MonoBehaviour
 
 
 
-        previousgrounded = groundDetectionScript.grounded;
+        previousgrounded = cc.isGrounded;
 
         // post precessing
 
-        float magnitude = rb.velocity.magnitude / minspeedforpostprocessing;
+        float magnitude = velocity.magnitude / minspeedforpostprocessing;
         lastweight = Mathf.Lerp(lastweight, magnitude, timetosetweight);
         volume.weight = lastweight;
     }
 
+    public void Respawn()
+    {
+        if (lastBuilding)
+        {
+            transform.position = lastBuilding.transform.position + new Vector3(0,5,0);
+        }
+        else
+        {
+            
+        }
+    }
 }

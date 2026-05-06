@@ -11,6 +11,7 @@ public class Building : MonoBehaviour
 {
     [Header("level data")]
     public Vector2Int gridPosition;
+    public bool interactible = true;
     
     [Header("building data")]
     public List<Vector2Int> gridSpots;
@@ -20,7 +21,7 @@ public class Building : MonoBehaviour
 
     public bool MoveBuilding(Vector2Int delta)
     {
-        if (playerRidden)
+        if (playerRidden || !interactible)
         {
             return false;
         }
