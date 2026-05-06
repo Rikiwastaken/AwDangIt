@@ -405,21 +405,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2173802461927066848, guid: f503f96a952bac9b98e436fe7b79ffc7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173802461927066848, guid: f503f96a952bac9b98e436fe7b79ffc7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.30200005
+      objectReference: {fileID: 0}
     - target: {fileID: 4702596056483458480, guid: f503f96a952bac9b98e436fe7b79ffc7, type: 3}
       propertyPath: m_Name
       value: GameBoilerplate
       objectReference: {fileID: 0}
     - target: {fileID: 9065964263386841776, guid: f503f96a952bac9b98e436fe7b79ffc7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.148781
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9065964263386841776, guid: f503f96a952bac9b98e436fe7b79ffc7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.74332
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9065964263386841776, guid: f503f96a952bac9b98e436fe7b79ffc7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.348424
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9065964263386841776, guid: f503f96a952bac9b98e436fe7b79ffc7, type: 3}
       propertyPath: m_LocalRotation.w
