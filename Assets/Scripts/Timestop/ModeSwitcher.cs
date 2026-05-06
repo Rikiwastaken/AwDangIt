@@ -116,7 +116,7 @@ public class ModeSwitcher : MonoBehaviour
         TimestopManager.Instance.control = true;
         TimestopManager.Instance.selectedBuilding = null;
         TimestopManager.Instance.buildingMoved = false;
-        GridGenerator.Instance.gameObject.SetActive(true);
+        GridGenerator.Instance.gridSectionsHolder.SetActive(true);
         foreach (var b in _childBuildings)
         {
             b.ShowSelector();
@@ -132,7 +132,7 @@ public class ModeSwitcher : MonoBehaviour
         playerHasControl = false;
         timestopCamera.enabled = false;
         _movementCamera.enabled = true;
-        GridGenerator.Instance.gameObject.SetActive(false);
+        GridGenerator.Instance.gridSectionsHolder.SetActive(false);
         foreach (var b in _childBuildings)
         {
             b.HideSelector();

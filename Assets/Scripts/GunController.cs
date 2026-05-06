@@ -38,7 +38,7 @@ public class GunController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(spawnTransform.transform.position,
                     spawnTransform.transform.forward,
-                    out hit, falloffDistance, LayerMask.GetMask("Ground", "Target")))
+                    out hit, falloffDistance))
             {
                 if (hit.collider.gameObject.layer == 6 && bulletHolePrefab)
                 {
