@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1471739936443496390}
   - component: {fileID: 7020195997715162690}
   - component: {fileID: 7504728567027428760}
+  - component: {fileID: 8900816708578035040}
   m_Layer: 3
   m_Name: Character
   m_TagString: Untagged
@@ -134,6 +135,23 @@ MonoBehaviour:
   falloffDistance: 24
   LaserPrefab: {fileID: 7816396704861573647, guid: d51a2ff37c74d254f98a40de2867c579, type: 3}
   DroneTransform: {fileID: 9126216589992762073}
+--- !u!114 &8900816708578035040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993830497084104787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e71b08c793f5146bf8c76d54def56d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mindistgorgrapple: 38
+  minangleforgrapple: 90
+  Isgrappling: 0
+  grapplingspeed: 30
+  MinDistToStopGrappling: 0.5
 --- !u!1 &2410218130839335107
 GameObject:
   m_ObjectHideFlags: 0

@@ -59,6 +59,7 @@ public class MovementScript : MonoBehaviour
     [Header("debug")]
     public Building lastBuilding;
 
+    private GrappleController GrappleController;
     public void OnDisable()
     {
         velocity = Vector3.zero;
@@ -84,6 +85,7 @@ public class MovementScript : MonoBehaviour
         CameraTransform = GetComponentInChildren<CinemachineVirtualCamera>().transform;
         volume = FindAnyObjectByType<PostProcessVolume>();
         animator = GetComponentInChildren<Animator>();
+        GrappleController = GetComponent<GrappleController>();
     }
 
     // Update is called once per frame
@@ -211,8 +213,11 @@ public class MovementScript : MonoBehaviour
             }
 
         }
+        if (!GrappleController.Isgrappling)
+        {
+            cc.Move(velocity * Time.deltaTime);
+        }
 
-        cc.Move(velocity * Time.deltaTime);
 
         // animations
 
@@ -236,8 +241,8 @@ public class MovementScript : MonoBehaviour
         previousgrounded = cc.isGrounded;
 
         // bob
-        
-        
+
+
         // post precessing
 
         float magnitude = velocity.magnitude / minspeedforpostprocessing;
