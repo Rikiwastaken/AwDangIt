@@ -18,7 +18,6 @@ public class MovementScript : MonoBehaviour
 
 
     private CharacterController cc;
-    
 
     private Transform CameraTransform;
 
@@ -62,7 +61,7 @@ public class MovementScript : MonoBehaviour
     [Header("debug")]
     public Vector3 velocity;
     public Building lastBuilding;
-
+    
     public void OnDisable()
     {
         velocity = Vector3.zero;
@@ -137,11 +136,11 @@ public class MovementScript : MonoBehaviour
 
             movement = Quaternion.Euler(0, CameraTransform.eulerAngles.y, 0) * movement;
 
+
+
             movement.y = velocity.y;
 
             velocity = movement;
-
-            
         }
         else
         {
@@ -225,7 +224,11 @@ public class MovementScript : MonoBehaviour
             droneTarget = transform.position - projected * 2.5f + transform.up * 2.5f;
         }
         
-        cc.Move(velocity * Time.deltaTime);
+        if (!GrappleController.Instance.Isgrappling)
+        {
+            cc.Move(velocity * Time.deltaTime);
+        }
+
 
         // animations
 

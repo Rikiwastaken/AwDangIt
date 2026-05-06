@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1471739936443496390}
   - component: {fileID: 7020195997715162690}
   - component: {fileID: 7504728567027428760}
+  - component: {fileID: 8414735761924735197}
   m_Layer: 3
   m_Name: Character
   m_TagString: Untagged
@@ -55,7 +56,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.17
   m_Height: 1.7
@@ -115,6 +116,7 @@ MonoBehaviour:
   jumpduration: 0.2
   downacceleration: 9.8
   timetosetweight: 0.1
+  droneTarget: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
   lastBuilding: {fileID: 0}
 --- !u!114 &7504728567027428760
@@ -133,7 +135,26 @@ MonoBehaviour:
   spawnTransform: {fileID: 639498271886790501}
   falloffDistance: 24
   LaserPrefab: {fileID: 7816396704861573647, guid: d51a2ff37c74d254f98a40de2867c579, type: 3}
-  DroneTransform: {fileID: 0}
+--- !u!114 &8414735761924735197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993830497084104787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e71b08c793f5146bf8c76d54def56d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mindistgorgrapple: 38
+  minangleforgrapple: 60
+  Isgrappling: 0
+  grapplingspeed: 30
+  MinDistToStopGrappling: 0.5
+  xrotationpersec: 0
+  yrotationpersec: 180
+  zrotationpersec: -120
 --- !u!1 &2410218130839335107
 GameObject:
   m_ObjectHideFlags: 0
