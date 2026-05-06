@@ -1,4 +1,3 @@
-using System;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,7 +6,7 @@ using UnityEngine.Rendering.PostProcessing;
 public class MovementScript : MonoBehaviour
 {
     public static MovementScript Instance { get; private set; }
-    
+
     private Vector2 MoveValue;
     private InputAction MoveInputaction;
 
@@ -20,7 +19,7 @@ public class MovementScript : MonoBehaviour
 
     private CharacterController cc;
     private Vector3 velocity;
-    
+
     private Transform CameraTransform;
 
     private Animator animator;
@@ -61,7 +60,7 @@ public class MovementScript : MonoBehaviour
     public Building lastBuilding;
 
     public void OnDisable()
-    { 
+    {
         velocity = Vector3.zero;
     }
 
@@ -74,7 +73,7 @@ public class MovementScript : MonoBehaviour
     {
         return cc.isGrounded;
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -144,7 +143,7 @@ public class MovementScript : MonoBehaviour
         {
             Vector3 targetspeed = new Vector3(0f, velocity.y, 0f);
             velocity = Vector3.Lerp(velocity, targetspeed, 0.5f);
-            
+
         }
         if (cc.isGrounded)
         {
@@ -247,11 +246,13 @@ public class MovementScript : MonoBehaviour
     {
         if (lastBuilding)
         {
-            transform.position = lastBuilding.transform.position + new Vector3(0,5,0);
+            GetComponent<CharacterController>().enabled = false;
+            transform.position = lastBuilding.transform.position + new Vector3(0, 5, 0);
+            GetComponent<CharacterController>().enabled = true;
         }
         else
         {
-            
+
         }
     }
 }
