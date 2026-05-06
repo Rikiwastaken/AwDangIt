@@ -152,6 +152,9 @@ MonoBehaviour:
   Isgrappling: 0
   grapplingspeed: 30
   MinDistToStopGrappling: 0.5
+  xrotationpersec: 0
+  yrotationpersec: 180
+  zrotationpersec: -120
 --- !u!1 &2410218130839335107
 GameObject:
   m_ObjectHideFlags: 0

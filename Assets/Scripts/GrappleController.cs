@@ -24,11 +24,20 @@ public class GrappleController : MonoBehaviour
     public float grapplingspeed;
     public float MinDistToStopGrappling;
 
+    private Vector3 previousvelocity;
+
+    private CharacterController _characterController;
+
+    public float xrotationpersec;
+    public float yrotationpersec;
+    public float zrotationpersec;
+
     // Start is called before the first frame update
     void Start()
     {
         GetGrapplepoint();
         CameraTransform = GetComponentInChildren<CinemachineVirtualCamera>().transform;
+        _characterController = GetComponent<CharacterController>();
         _grappleAction = InputSystem.actions.FindAction("Grapple");
     }
 
@@ -51,10 +60,12 @@ public class GrappleController : MonoBehaviour
             if (Vector3.Distance(SelectedGrapplePoint.transform.position, CameraTransform.position) <= MinDistToStopGrappling || _grappleAction.WasPerformedThisFrame())
             {
                 Isgrappling = false;
+                _characterController.Move(previousvelocity);
                 return;
             }
             Vector3 velocity = (SelectedGrapplePoint.transform.position - CameraTransform.position).normalized * grapplingspeed * Time.deltaTime;
-            GetComponent<CharacterController>().Move(velocity);
+            previousvelocity = velocity;
+            _characterController.Move(velocity);
         }
         else
         {
@@ -109,6 +120,7 @@ public class GrappleController : MonoBehaviour
         foreach (GameObject grapple in grapplepointList)
         {
             GameObject Canvas = grapple.transform.GetChild(0).gameObject;
+            GameObject Model = grapple.transform.GetChild(1).gameObject;
             if (grapple == SelectedGrapplePoint)
             {
                 if (!Canvas.activeSelf)
@@ -116,6 +128,7 @@ public class GrappleController : MonoBehaviour
                     Canvas.SetActive(true);
                 }
                 Canvas.transform.LookAt(CameraTransform);
+                Model.transform.rotation = Quaternion.Euler(Model.transform.rotation.eulerAngles + new Vector3(xrotationpersec, yrotationpersec, zrotationpersec) * Time.deltaTime);
             }
             else
             {
