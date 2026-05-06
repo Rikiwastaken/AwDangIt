@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GunController : MonoBehaviour
 {
     public static GunController Instance { get; private set; }
-    
+
     public GameObject bulletHolePrefab;
     public Transform spawnTransform;
 
@@ -15,12 +12,16 @@ public class GunController : MonoBehaviour
     public float falloffDistance;
 
     private InputAction _shootAction;
+    public GameObject LaserPrefab;
+    public Transform DroneTransform;
+
+    private GameObject PreviousLaser;
 
     private void Awake()
     {
         Instance = this;
     }
-    
+
     private void Start()
     {
         _shootAction = InputSystem.actions.FindAction("Shoot");
@@ -34,7 +35,7 @@ public class GunController : MonoBehaviour
             // o.transform.position = playerCamera.transform.position;
             // // o.transform.eulerAngles.y = transform.eulerAngles.y;
             // o.transform.eulerAngles = new Vector3(playerCamera.transform.eulerAngles.x, transform.eulerAngles.y, 0);
-            
+
             RaycastHit hit;
             if (Physics.Raycast(spawnTransform.transform.position,
                     spawnTransform.transform.forward,
@@ -51,7 +52,21 @@ public class GunController : MonoBehaviour
                     Target t = hit.collider.gameObject.GetComponent<Target>();
                     t.Hit();
                 }
+                CylinderInstantiator(hit.point);
             }
         }
+    }
+
+    private void CylinderInstantiator(Vector3 hitposition)
+    {
+        if (PreviousLaser == null)
+        {
+            PreviousLaser = Instantiate(LaserPrefab);
+        }
+
+        PreviousLaser.GetComponent<LaserScript>().ResetMat();
+        PreviousLaser.transform.position = (DroneTransform.position + hitposition) / 2f;
+        PreviousLaser.transform.up = (hitposition - DroneTransform.position).normalized;
+        PreviousLaser.transform.localScale = new Vector3(PreviousLaser.transform.localScale.x, Vector3.Distance(hitposition, DroneTransform.position), PreviousLaser.transform.localScale.z);
     }
 }
