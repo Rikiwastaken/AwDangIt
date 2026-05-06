@@ -13,7 +13,6 @@ public class GunController : MonoBehaviour
 
     private InputAction _shootAction;
     public GameObject LaserPrefab;
-    public Transform DroneTransform;
 
     private GameObject PreviousLaser;
 
@@ -64,6 +63,7 @@ public class GunController : MonoBehaviour
             PreviousLaser = Instantiate(LaserPrefab);
         }
 
+        Transform DroneTransform = DroneFollow.Instance.transform;
         PreviousLaser.GetComponent<LaserScript>().ResetMat();
         PreviousLaser.transform.position = (DroneTransform.position + hitposition) / 2f;
         PreviousLaser.transform.up = (hitposition - DroneTransform.position).normalized;

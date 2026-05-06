@@ -56,6 +56,9 @@ public class MovementScript : MonoBehaviour
     private float lastweight;
     private PostProcessVolume volume;
 
+    [Header("extern")]
+    public Vector3 droneTarget;
+    
     [Header("debug")]
     public Vector3 velocity;
     public Building lastBuilding;
@@ -134,11 +137,11 @@ public class MovementScript : MonoBehaviour
 
             movement = Quaternion.Euler(0, CameraTransform.eulerAngles.y, 0) * movement;
 
-
-
             movement.y = velocity.y;
 
             velocity = movement;
+
+            
         }
         else
         {
@@ -214,6 +217,14 @@ public class MovementScript : MonoBehaviour
 
         }
 
+        Vector3 projected = velocity;
+        projected.y = 0;
+        projected.Normalize();
+        if (projected.magnitude != 0)
+        {
+            droneTarget = transform.position - projected * 2.5f + transform.up * 2.5f;
+        }
+        
         cc.Move(velocity * Time.deltaTime);
 
         // animations
