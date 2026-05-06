@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7020195997715162690}
   - component: {fileID: 7504728567027428760}
   - component: {fileID: 8414735761924735197}
+  - component: {fileID: 1600310930315453726}
   m_Layer: 3
   m_Name: Character
   m_TagString: Untagged
@@ -116,6 +117,7 @@ MonoBehaviour:
   jumpduration: 0.2
   downacceleration: 9.8
   timetosetweight: 0.1
+  sfxJumpDriver: {fileID: 1600310930315453726}
   droneTarget: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
   lastBuilding: {fileID: 0}
@@ -155,6 +157,23 @@ MonoBehaviour:
   xrotationpersec: 0
   yrotationpersec: 180
   zrotationpersec: -120
+--- !u!114 &1600310930315453726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993830497084104787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33bb3fbff7aea7fe4b6ad1b8735d3257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 14b2a91fa0c40012a90a3129ed91ce03, type: 3}
+  - {fileID: 8300000, guid: 1acfc0016b28f4335b5e15c3849232c6, type: 3}
+  - {fileID: 8300000, guid: 9993dbb1a6258a4578b6567ea8779729, type: 3}
+  spatialBlend: 0
 --- !u!1 &2410218130839335107
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +297,7 @@ Transform:
   m_GameObject: {fileID: 7896305274494865132}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.302, z: 0.302}
+  m_LocalPosition: {x: 0, y: 1.302, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -342,7 +361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 54ead0c50ad589843a786974c616c378, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 54ead0c50ad589843a786974c616c378, type: 3}
       propertyPath: m_LocalRotation.w

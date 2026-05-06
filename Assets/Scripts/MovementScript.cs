@@ -55,12 +55,16 @@ public class MovementScript : MonoBehaviour
     private float lastweight;
     private PostProcessVolume volume;
 
+    [Header("SFX DRIVERS")]
+    public SFXDriver sfxJumpDriver;
+
     [Header("extern")]
     public Vector3 droneTarget;
     
     [Header("debug")]
     public Vector3 velocity;
     public Building lastBuilding;
+    public bool canControl = true;
     
     public void OnDisable()
     {
@@ -112,7 +116,7 @@ public class MovementScript : MonoBehaviour
 
         // movement
 
-        if (MoveValue.magnitude != 0)
+        if (MoveValue.magnitude != 0 && canControl)
         {
             float speed = airborneSpeed;
             if (cc.isGrounded)
@@ -172,7 +176,7 @@ public class MovementScript : MonoBehaviour
             justjumpedcounter--;
         }
 
-        if (JumpInputaction.IsPressed())
+        if (JumpInputaction.IsPressed() && canControl)
         {
             if (jumpavailable)
             {
@@ -182,7 +186,7 @@ public class MovementScript : MonoBehaviour
                 justjumpedcounter = (int)(jumpduration / Time.deltaTime);
                 velocity = new Vector3(velocity.x, JumpVerticalSpeed, velocity.z);
                 animator.Play("Jump");
-
+                sfxJumpDriver.PlayRandomSound();
             }
 
             else if (doublejumpavailable && !pressedjump)
@@ -219,7 +223,7 @@ public class MovementScript : MonoBehaviour
         Vector3 projected = velocity;
         projected.y = 0;
         projected.Normalize();
-        if (projected.magnitude != 0)
+        if (projected.magnitude != 0 || Mathf.Abs(velocity.y) >= 1.5f)
         {
             droneTarget = transform.position - projected * 2.5f + transform.up * 2.5f;
         }
@@ -269,9 +273,7 @@ public class MovementScript : MonoBehaviour
             transform.position = lastBuilding.transform.position + new Vector3(0, 5, 0);
             GetComponent<CharacterController>().enabled = true;
         }
-        else
-        {
 
-        }
+        canControl = true;
     }
 }
