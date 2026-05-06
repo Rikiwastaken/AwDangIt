@@ -24,6 +24,7 @@ public class TimestopManager : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera;
 
     [Header("public variables (debug)")]
+    public bool control = false;
     public Building selectedBuilding;
     public bool buildingMoved = false;
     public int moves = 0;
@@ -43,13 +44,13 @@ public class TimestopManager : MonoBehaviour
 
         virtualCamera.transform.localPosition = new Vector3(
             Constants.TimestopConstants.GridSize * (levelSize.x / 2.0f - 0.5f),
-            50.0f + Math.Max(levelSize.x, levelSize.y) * 25.0f,
-            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f) - Math.Max(levelSize.x, levelSize.y) * 25.0f
+            50.0f + Math.Max(levelSize.x, levelSize.y) * 16.0f,
+            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f) - levelSize.y * 25.0f
         );
         virtualCamera.transform.LookAt(new Vector3(
             Constants.TimestopConstants.GridSize * (levelSize.x / 2.0f - 0.5f),
             averageHeight,
-            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f)
+            Constants.TimestopConstants.GridSize * (levelSize.y / 2.0f - 0.5f) * 0.8f
         ));
 
         foreach (Transform child in transform)
@@ -62,47 +63,54 @@ public class TimestopManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_shootAction.WasPressedThisFrame())
+        if (control)
         {
-            Vector2 cursorPos = _cursorAction.ReadValue<Vector2>();
-            Ray ray = mainCamera.ScreenPointToRay(new Vector3(cursorPos.x, cursorPos.y, 0));
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("BuildingCollider")))
+            if (_shootAction.WasPressedThisFrame())
             {
-                // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                Building aimedBuilding = hit.collider.transform.parent.GetComponent<Building>();
-                if (!(aimedBuilding.playerRidden || !aimedBuilding.interactible))
+                Vector2 cursorPos = _cursorAction.ReadValue<Vector2>();
+                Ray ray = mainCamera.ScreenPointToRay(new Vector3(cursorPos.x, cursorPos.y, 0));
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("BuildingCollider")))
                 {
-                    selectedBuilding = aimedBuilding;
-                    ArrowSelectIdle.Instance.gameObject.SetActive(true);
+                    // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                    Building aimedBuilding = hit.collider.transform.parent.GetComponent<Building>();
+                    if (!(aimedBuilding.playerRidden || !aimedBuilding.interactible))
+                    {
+                        if (selectedBuilding)
+                        {
+                            selectedBuilding.OnDeselected();
+                        }
+                        selectedBuilding = aimedBuilding;
+                        selectedBuilding.OnSelected();
+                    }
+
+                }
+            }
+
+            Vector2 moveDir = _moveAction.ReadValue<Vector2>();
+
+            if (selectedBuilding)
+            {
+                bool validMove = false;
+                if (moveDir.x != 0 && _oldMoveDir.x == 0)
+                {
+                    validMove = selectedBuilding.MoveBuilding(new Vector2Int((int)moveDir.x, 0));
+                }
+                if (moveDir.y != 0 && _oldMoveDir.y == 0)
+                {
+                    validMove = selectedBuilding.MoveBuilding(new Vector2Int(0, (int)moveDir.y));
                 }
 
+                if (validMove)
+                {
+                    buildingMoved = true;
+                    moves++;
+                }
             }
+
+            _oldMoveDir = moveDir;
         }
-
-        Vector2 moveDir = _moveAction.ReadValue<Vector2>();
-
-        if (selectedBuilding)
-        {
-            bool validMove = false;
-            ArrowSelectIdle.Instance.position = selectedBuilding.transform.position + new Vector3(0, 20.0f, 0);
-            if (moveDir.x != 0 && _oldMoveDir.x == 0)
-            {
-                validMove = selectedBuilding.MoveBuilding(new Vector2Int((int)moveDir.x, 0));
-            }
-            if (moveDir.y != 0 && _oldMoveDir.y == 0)
-            {
-                validMove = selectedBuilding.MoveBuilding(new Vector2Int(0, (int)moveDir.y));
-            }
-
-            if (validMove)
-            {
-                buildingMoved = true;
-                moves++;
-            }
-        }
-
-        _oldMoveDir = moveDir;
+        
     }
 
     public List<Vector2Int> GetAllBuildingPositions()

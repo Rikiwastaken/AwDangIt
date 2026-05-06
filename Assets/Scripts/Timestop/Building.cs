@@ -15,6 +15,12 @@ public class Building : MonoBehaviour
     
     [Header("building data")]
     public List<Vector2Int> gridSpots;
+
+    [Header("accessors")]
+    public Renderer selector;
+    public Material materialSelected;
+    public Material materialUninteractable;
+    public Material materialPlayerRidden;
     
     [Header("debug")]
     public bool playerRidden;
@@ -60,6 +66,37 @@ public class Building : MonoBehaviour
         }
 
         return validMove;
+    }
+
+    public void ShowSelector()
+    {
+        if (playerRidden)
+        {
+            selector.material = materialPlayerRidden;
+            selector.gameObject.SetActive(true);
+        }
+        if (!interactible)
+        {
+            selector.material = materialUninteractable;
+            selector.gameObject.SetActive(true);
+        }
+    }
+    
+    public void HideSelector()
+    {
+        selector.gameObject.SetActive(false);
+    }
+
+    public void OnSelected()
+    {
+        selector.material = materialSelected;
+        selector.gameObject.SetActive(true);
+    }
+
+    public void OnDeselected()
+    {
+        HideSelector();
+        ShowSelector();
     }
     
 #if UNITY_EDITOR

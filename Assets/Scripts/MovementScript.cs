@@ -18,7 +18,7 @@ public class MovementScript : MonoBehaviour
 
 
     private CharacterController cc;
-    private Vector3 velocity;
+    
 
     private Transform CameraTransform;
 
@@ -57,6 +57,7 @@ public class MovementScript : MonoBehaviour
     private PostProcessVolume volume;
 
     [Header("debug")]
+    public Vector3 velocity;
     public Building lastBuilding;
 
     public void OnDisable()
@@ -157,6 +158,7 @@ public class MovementScript : MonoBehaviour
         {
             jumpavailable = true;
             doublejumpavailable = true;
+            velocity = new Vector3(velocity.x, -1, velocity.z); //i don't want to know why it has to fall
         }
         else
         {
@@ -218,7 +220,7 @@ public class MovementScript : MonoBehaviour
 
         if (cc.isGrounded)
         {
-            if (!previousgrounded)
+            if (!previousgrounded && velocity.y < -10)
             {
                 animator.Play("Fall To Roll");
             }
