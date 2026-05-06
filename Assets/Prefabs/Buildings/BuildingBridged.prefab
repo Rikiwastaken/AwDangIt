@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridPosition: {x: 0, y: 0}
+  interactible: 1
   gridSpots:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
@@ -324,7 +325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4941752905861628258, guid: a58bb6fc0b1290382a785b71018ad1b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4941752905861628258, guid: a58bb6fc0b1290382a785b71018ad1b9, type: 3}
       propertyPath: m_LocalPosition.z
