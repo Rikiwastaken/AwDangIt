@@ -34,7 +34,7 @@ public class DroneFollow : MonoBehaviour
         }
         else if (Time.time - _lastBigMovement > 5f && Random.Range(0,600) == 0)
         {
-            _sfxDriver.PlayRandomSound();
+            // _sfxDriver.PlayRandomSound();
         }
         
         transform.position = newPos;

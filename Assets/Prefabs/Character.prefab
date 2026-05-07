@@ -119,6 +119,7 @@ MonoBehaviour:
   downacceleration: 9.8
   timetosetweight: 0.1
   sfxJumpDriver: {fileID: 1600310930315453726}
+  sfxStepDriver: {fileID: 2190482827237160183}
   droneTarget: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
   lastBuilding: {fileID: 0}
@@ -135,10 +136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be268f0c55f575150809565973a00149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletHolePrefab: {fileID: 2503116845759288200, guid: 6bf367fabb5f343e3b6c26116f5574b3, type: 3}
   spawnTransform: {fileID: 639498271886790501}
   falloffDistance: 24
   LaserPrefab: {fileID: 7816396704861573647, guid: d51a2ff37c74d254f98a40de2867c579, type: 3}
+  droneShootDriver: {fileID: 0}
 --- !u!114 &8414735761924735197
 MonoBehaviour:
   m_ObjectHideFlags: 0

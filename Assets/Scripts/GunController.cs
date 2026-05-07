@@ -39,7 +39,7 @@ public class GunController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(spawnTransform.transform.position,
                     spawnTransform.transform.forward,
-                    out hit, falloffDistance))
+                    out hit, falloffDistance, LayerMask.GetMask("Default","Ground","GrapplePoint","Target")))
             {
                 if (hit.collider.gameObject.layer == 9)
                 {

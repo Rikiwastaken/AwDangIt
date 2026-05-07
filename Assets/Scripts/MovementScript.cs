@@ -57,6 +57,7 @@ public class MovementScript : MonoBehaviour
 
     [Header("SFX DRIVERS")]
     public SFXDriver sfxJumpDriver;
+    public SFXDriver sfxStepDriver;
 
     [Header("extern")]
     public Vector3 droneTarget;
@@ -240,6 +241,10 @@ public class MovementScript : MonoBehaviour
 
         if (cc.isGrounded)
         {
+            if (!previousgrounded)
+            {
+                sfxStepDriver.PlayRandomSound();
+            }
             if (!previousgrounded && velocity.y < -10)
             {
                 animator.Play("Fall To Roll");
