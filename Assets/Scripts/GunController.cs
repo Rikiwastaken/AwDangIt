@@ -64,6 +64,6 @@ public class GunController : MonoBehaviour
         PreviousLaser.GetComponent<LaserScript>().ResetMat();
         PreviousLaser.transform.position = (DroneTransform.position + hitposition) / 2f;
         PreviousLaser.transform.up = (hitposition - DroneTransform.position).normalized;
-        PreviousLaser.transform.localScale = new Vector3(PreviousLaser.transform.localScale.x, Vector3.Distance(hitposition, DroneTransform.position), PreviousLaser.transform.localScale.z);
+        PreviousLaser.transform.localScale = new Vector3(PreviousLaser.transform.localScale.x, Vector3.Distance(hitposition, DroneTransform.position) / 2f, PreviousLaser.transform.localScale.z);
     }
 }

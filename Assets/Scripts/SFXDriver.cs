@@ -1,11 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SFXDriver : MonoBehaviour
 {
     public AudioClip[] clips;
     public float spatialBlend = 0.75f;
+    public AudioMixerGroup SFXMixergroup;
 
     private IEnumerator InstantiateSound(AudioClip clip)
     {
@@ -14,6 +15,7 @@ public class SFXDriver : MonoBehaviour
         AudioSource source = obj.AddComponent<AudioSource>();
         source.clip = clip;
         source.spatialBlend = spatialBlend;
+        source.outputAudioMixerGroup = SFXMixergroup;
         source.Play();
         yield return new WaitForSeconds(clip.length);
         Destroy(obj);

@@ -61,12 +61,12 @@ public class MovementScript : MonoBehaviour
 
     [Header("extern")]
     public Vector3 droneTarget;
-    
+
     [Header("debug")]
     public Vector3 velocity;
     public Building lastBuilding;
     public bool canControl = true;
-    
+
     public void OnDisable()
     {
         velocity = Vector3.zero;
@@ -230,7 +230,7 @@ public class MovementScript : MonoBehaviour
         {
             droneTarget = transform.position - projected * 2.5f + transform.up * 2.5f;
         }
-        
+
         if (!GrappleController.Instance.Isgrappling)
         {
             cc.Move(velocity * Time.deltaTime);
@@ -263,8 +263,8 @@ public class MovementScript : MonoBehaviour
         previousgrounded = cc.isGrounded;
 
         // bob
-        
-        
+
+
         // post precessing
 
         float magnitude = velocity.magnitude / minspeedforpostprocessing;
@@ -272,6 +272,10 @@ public class MovementScript : MonoBehaviour
         volume.weight = lastweight;
     }
 
+    public Transform GetCamTranform()
+    {
+        return CameraTransform;
+    }
     public void Respawn()
     {
         if (lastBuilding)

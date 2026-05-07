@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,11 +29,14 @@ public class DroneFollow : MonoBehaviour
         {
             _lastBigMovement = Time.time;
         }
-        else if (Time.time - _lastBigMovement > 5f && Random.Range(0,600) == 0)
+        else if (Time.time - _lastBigMovement > 5f && Random.Range(0, 600) == 0)
         {
             // _sfxDriver.PlayRandomSound();
         }
-        
+
         transform.position = newPos;
+
+        transform.forward = MovementScript.Instance.GetCamTranform().forward;
+
     }
 }

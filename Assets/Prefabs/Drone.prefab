@@ -62,6 +62,7 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 65688bdfa26f32e8aa9191bc59fcdf2e, type: 3}
   spatialBlend: 0.75
+  SFXMixergroup: {fileID: -7841863019747787572, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}
 --- !u!114 &5867746693063045999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +78,7 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: 34ba822d6c66ea42cb3aa25d9b18a311, type: 3}
   spatialBlend: 0.75
+  SFXMixergroup: {fileID: -7841863019747787572, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}
 --- !u!1001 &8878852188873224515
 PrefabInstance:
   m_ObjectHideFlags: 0

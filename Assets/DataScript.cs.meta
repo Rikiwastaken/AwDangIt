@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 33bb3fbff7aea7fe4b6ad1b8735d3257
+guid: c099993b70fc147489862cd97281e106
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - SFXMixergroup: {fileID: -7841863019747787572, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
