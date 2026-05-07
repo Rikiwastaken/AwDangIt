@@ -69,13 +69,15 @@ public class GrappleController : MonoBehaviour
             if (Vector3.Distance(SelectedGrapplePoint.transform.position, CameraTransform.position) <= MinDistToStopGrappling || _grappleAction.WasPerformedThisFrame())
             {
                 Isgrappling = false;
-                _characterController.Move(previousvelocity);
+                // _characterController.Move(previousvelocity);
+                MovementScript.Instance.velocity = previousvelocity;
                 audioSource.Stop();
                 return;
             }
             Vector3 velocity = (SelectedGrapplePoint.transform.position - CameraTransform.position).normalized * grapplingspeed * Time.deltaTime;
             previousvelocity = velocity;
             _characterController.Move(velocity);
+            
         }
         else
         {
@@ -102,7 +104,7 @@ public class GrappleController : MonoBehaviour
                 continue;
             }
             RaycastHit hit;
-            if (Physics.Raycast(CameraTransform.position, (grapplepoint.transform.position - CameraTransform.position).normalized, out hit, mindistgorgrapple, LayerMask.GetMask("Ground", "GrapplePoint")))
+            if (Physics.Raycast(CameraTransform.position, (grapplepoint.transform.position - CameraTransform.position).normalized, out hit, mindistgorgrapple, LayerMask.GetMask("Default", "Ground", "GrapplePoint")))
             {
                 if (hit.collider.gameObject == grapplepoint)
                 {

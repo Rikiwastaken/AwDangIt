@@ -36,8 +36,8 @@ public class MovementScript : MonoBehaviour
     public float sensitivityY = 15f;
     public float minVerticalAngle = -80f;
     public float maxVerticalAngle = 80f;
-    private float rotationX = 0f;
-    private float rotationY = 0f;
+    public float rotationX = 0f;
+    public float rotationY = 0f;
 
     [Header("Jump variables")]
     public float JumpVerticalSpeed;
