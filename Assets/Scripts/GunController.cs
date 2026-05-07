@@ -42,8 +42,8 @@ public class GunController : MonoBehaviour
             {
                 if (hit.collider.gameObject.layer == 6 && bulletHolePrefab)
                 {
-                    GameObject o = Instantiate(bulletHolePrefab);
-                    o.transform.position = hit.point;
+                    //GameObject o = Instantiate(bulletHolePrefab);
+                    //o.transform.position = hit.point;
                 }
                 else if (hit.collider.gameObject.layer == 9)
                 {
@@ -67,6 +67,6 @@ public class GunController : MonoBehaviour
         PreviousLaser.GetComponent<LaserScript>().ResetMat();
         PreviousLaser.transform.position = (DroneTransform.position + hitposition) / 2f;
         PreviousLaser.transform.up = (hitposition - DroneTransform.position).normalized;
-        PreviousLaser.transform.localScale = new Vector3(PreviousLaser.transform.localScale.x, Vector3.Distance(hitposition, DroneTransform.position), PreviousLaser.transform.localScale.z);
+        PreviousLaser.transform.localScale = new Vector3(PreviousLaser.transform.localScale.x, Vector3.Distance(hitposition, DroneTransform.position) / 2f, PreviousLaser.transform.localScale.z);
     }
 }
