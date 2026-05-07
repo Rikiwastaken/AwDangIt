@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class DeathScreamTrigger : MonoBehaviour
@@ -16,6 +15,7 @@ public class DeathScreamTrigger : MonoBehaviour
         {
             _sfxDriver.PlayRandomSound();
             MovementScript.Instance.canControl = false;
+            MovementScript.Instance.GetCamTranform().parent = null;
         }
     }
 }
