@@ -11,5 +11,29 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelSelect.unity
     guid: 8f8baaa0b1c4723a0b055f20f030a918
+  - enabled: 1
+    path: Assets/Scenes/Levels/Ex Cross.unity
+    guid: 03f5d9bbf431b91e99ef0f41475b90ae
+  - enabled: 1
+    path: Assets/Scenes/Levels/Height Map.unity
+    guid: 25cc4e42f29ed7387ac29eb6762fe726
+  - enabled: 1
+    path: Assets/Scenes/Levels/Hook Intro.unity
+    guid: 3930168c49eff3c609cc0a6058c16aef
+  - enabled: 1
+    path: Assets/Scenes/Levels/Immutable Intro.unity
+    guid: fd42c5e9f90b64a0485575c15f7e1f9f
+  - enabled: 1
+    path: Assets/Scenes/Levels/Introduction A.unity
+    guid: f0638c49a06c31d65be9580444b3d435
+  - enabled: 1
+    path: Assets/Scenes/Levels/Introduction B.unity
+    guid: 9622ac50418bf748488f9da62e9688be
+  - enabled: 1
+    path: Assets/Scenes/Levels/Sanity Check.unity
+    guid: 720ef5f98933fe30e9554b2f3a5f39b2
+  - enabled: 1
+    path: Assets/Scenes/Levels/I'm the Bus.unity
+    guid: c4e6efeee529ec1ecba09ebf05be65de
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: cbd80cbcf19392641991cdc9b3bbdce7, type: 3}

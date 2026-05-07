@@ -36,8 +36,8 @@ public class MovementScript : MonoBehaviour
     public float sensitivityY = 15f;
     public float minVerticalAngle = -80f;
     public float maxVerticalAngle = 80f;
-    private float rotationX = 0f;
-    private float rotationY = 0f;
+    public float rotationX = 0f;
+    public float rotationY = 0f;
 
     [Header("Jump variables")]
     public float JumpVerticalSpeed;
@@ -57,6 +57,7 @@ public class MovementScript : MonoBehaviour
 
     [Header("SFX DRIVERS")]
     public SFXDriver sfxJumpDriver;
+    public SFXDriver sfxStepDriver;
 
     [Header("extern")]
     public Vector3 droneTarget;
@@ -168,6 +169,7 @@ public class MovementScript : MonoBehaviour
         }
         else
         {
+            jumpavailable = false;
             velocity += Physics.gravity * Time.deltaTime;
         }
 
@@ -178,6 +180,7 @@ public class MovementScript : MonoBehaviour
 
         if (JumpInputaction.IsPressed() && canControl)
         {
+            
             if (jumpavailable)
             {
 
@@ -238,6 +241,10 @@ public class MovementScript : MonoBehaviour
 
         if (cc.isGrounded)
         {
+            if (!previousgrounded)
+            {
+                sfxStepDriver.PlayRandomSound();
+            }
             if (!previousgrounded && velocity.y < -10)
             {
                 animator.Play("Fall To Roll");

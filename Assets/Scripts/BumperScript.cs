@@ -8,7 +8,9 @@ public class BumperScript : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            other.transform.GetComponentInChildren<Rigidbody>().velocity += transform.up * forceamount;
+            MovementScript.Instance.velocity += transform.up * forceamount;
+            MovementScript.Instance.GetComponent<CharacterController>()
+                .Move(transform.up * forceamount * Time.deltaTime);
         }
     }
 
