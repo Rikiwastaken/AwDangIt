@@ -156,7 +156,10 @@ public class MainMenuScript : MonoBehaviour
 
     public void LoadLevel(TextMeshProUGUI ButtonTMP)
     {
+
+
         string levelname = ButtonTMP.text;
+        DataScript.instance.currentlevelID = levelnames.IndexOf(levelname);
         Debug.Log("loading level : " + levelname);
         SceneManager.LoadScene("Scenes/Levels/" + levelname);
     }

@@ -42,6 +42,8 @@ public class DataScript : MonoBehaviour
         instance = this;
         LoadSave();
     }
+
+    public int currentlevelID;
     void Start()
     {
 
@@ -127,6 +129,7 @@ public class DataScript : MonoBehaviour
         Save.leveldata.Add(NewlevelData);
         SaveData();
     }
+
     public void SaveData()
     {
         UpdateMixer();
