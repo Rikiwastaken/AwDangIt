@@ -44,3 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c099993b70fc147489862cd97281e106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Save:
+    leveldata: []
+    optiondata:
+      MasterVol: 1
+      SFXVol: 1
+      MusicVol: 1
+      Sensitivity: 1
+  mixer: {fileID: 24100000, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}

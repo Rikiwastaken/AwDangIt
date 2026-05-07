@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -26,11 +27,23 @@ public class MainMenuScript : MonoBehaviour
 
     public TextMeshProUGUI DetailsTMP;
 
+    [Header("Option Variables")]
+    public Slider MasterSlider;
+    public Slider MusicSlider;
+    public Slider SFXSlider;
+    public TextMeshProUGUI MasterTxt;
+    public TextMeshProUGUI MusicTxt;
+    public TextMeshProUGUI SFXTxt;
+    private float previousMaster;
+    private float previousMusic;
+    private float previousSFX;
+    private bool schedulesave;
+
     // Start is called before the first frame update
     void Start()
     {
         dronebaseY = Drone.transform.position.y;
-
+        InitializeSliders();
         SetLevelNames();
 
     }
@@ -38,6 +51,12 @@ public class MainMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (TitleCam.enabled && (InputSystem.actions.FindAction("Shoot").IsPressed() || InputSystem.actions.FindAction("Jump").IsPressed()))
+        {
+            TitleCam.enabled = false;
+        }
+
         ManageDroneMovement();
         if (LevelListTransform.gameObject.activeSelf)
         {
@@ -48,6 +67,38 @@ public class MainMenuScript : MonoBehaviour
                 SetDetailsText();
             }
         }
+        if (MasterSlider.transform.parent.gameObject.activeSelf)
+        {
+            UpdateVolume();
+        }
+    }
+
+    private void UpdateVolume()
+    {
+        if (previousMaster != MasterSlider.value || previousMusic != MusicSlider.value || previousSFX != SFXSlider.value)
+        {
+            previousMaster = MasterSlider.value;
+            previousMusic = MusicSlider.value;
+            previousSFX = SFXSlider.value;
+            MasterTxt.text = "Master: " + (int)(MasterSlider.value * 100);
+            MusicTxt.text = "Music: " + (int)(MusicSlider.value * 100);
+            SFXTxt.text = "SFX: " + (int)(SFXSlider.value * 100);
+            schedulesave = true;
+            DataScript.instance.UpdateMixer(MasterSlider.value, MusicSlider.value, SFXSlider.value);
+        }
+    }
+    private void InitializeSliders()
+    {
+        DataScript.OptionData optionData = DataScript.instance.GetOptionData();
+        MasterSlider.value = optionData.MasterVol;
+        SFXSlider.value = optionData.SFXVol;
+        MusicSlider.value = optionData.MusicVol;
+        previousMaster = MasterSlider.value;
+        previousMusic = MusicSlider.value;
+        previousSFX = SFXSlider.value;
+        MasterTxt.text = "Master: " + (int)(optionData.MasterVol * 100);
+        MusicTxt.text = "Music: " + (int)(optionData.MusicVol * 100);
+        SFXTxt.text = "SFX: " + (int)(optionData.SFXVol * 100);
     }
 
     private GameObject GetHoveredButton()
@@ -77,6 +128,15 @@ public class MainMenuScript : MonoBehaviour
             {
                 LevelListTransform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = levelnames[i];
             }
+        }
+    }
+
+    public void SaveOptions() // to be called  by button
+    {
+        if (schedulesave)
+        {
+            DataScript.instance.SaveData();
+            schedulesave = false;
         }
     }
 

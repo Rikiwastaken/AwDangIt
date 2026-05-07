@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class DataScript : MonoBehaviour
@@ -33,6 +34,8 @@ public class DataScript : MonoBehaviour
 
     [SerializeField] private SaveClass Save;
 
+    public AudioMixer mixer;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -48,6 +51,10 @@ public class DataScript : MonoBehaviour
         }
     }
 
+    public OptionData GetOptionData()
+    {
+        return Save.optiondata;
+    }
 
     private void LoadSave()
     {
@@ -75,6 +82,21 @@ public class DataScript : MonoBehaviour
             Save.optiondata = new OptionData();
             SaveData();
         }
+    }
+
+    public void UpdateMixer()
+    {
+        mixer.SetFloat("MasterVolume", Mathf.Log10(Save.optiondata.MasterVol) * 20f);
+        mixer.SetFloat("MusicVolume", Mathf.Log10(Save.optiondata.MusicVol) * 20f);
+        mixer.SetFloat("SFXVolume", Mathf.Log10(Save.optiondata.SFXVol) * 20f);
+    }
+
+    public void UpdateMixer(float master, float music, float sfx)
+    {
+        Save.optiondata.MasterVol = master;
+        Save.optiondata.MusicVol = music;
+        Save.optiondata.SFXVol = sfx;
+        UpdateMixer();
     }
 
     public LevelSaveData GetLevelData(int levelID)
@@ -107,6 +129,7 @@ public class DataScript : MonoBehaviour
     }
     public void SaveData()
     {
+        UpdateMixer();
         string path = Application.persistentDataPath;
         if (!Directory.Exists(path))
         {

@@ -134,3 +134,4 @@ MonoBehaviour:
   clips:
   - {fileID: 8300000, guid: da5eaf06ad0d7d67492b42abdf748b3e, type: 3}
   spatialBlend: 0
+  SFXMixergroup: {fileID: -7841863019747787572, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}

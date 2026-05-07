@@ -64,6 +64,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 41e749f0b1d94c56586b77bfc784ad19, type: 3}
   - {fileID: 8300000, guid: a494c921520fbb5bcaa6c7d71bea2bff, type: 3}
   - {fileID: 8300000, guid: d80e21d317e8f7c75acdafa3e6ae0297, type: 3}
+  spatialBlend: 0.75
+  SFXMixergroup: {fileID: -7841863019747787572, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}
 --- !u!1001 &8878852188873224515
 PrefabInstance:
   m_ObjectHideFlags: 0
