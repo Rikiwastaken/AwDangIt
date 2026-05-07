@@ -263,10 +263,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2173802461927066848}
   - component: {fileID: 6721113645726371993}
-  - component: {fileID: 9025327658259340203}
   - component: {fileID: 3507949362283772431}
   - component: {fileID: 1330819328039573447}
   - component: {fileID: 8756371486641014596}
+  - component: {fileID: 9025327658259340203}
+  - component: {fileID: 3300597022004725393}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -340,14 +341,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &9025327658259340203
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5655960107304173817}
-  m_Enabled: 1
 --- !u!114 &3507949362283772431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +452,37 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!81 &9025327658259340203
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655960107304173817}
+  m_Enabled: 1
+--- !u!164 &3300597022004725393
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655960107304173817}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: -800
+  m_DecayTime: 1.49
+  m_DecayHFRatio: 0.67
+  m_ReflectionsLevel: -2273
+  m_ReverbLevel: -1691
+  m_ReverbDelay: 0.011
+  m_Diffusion: 50
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 17
 --- !u!1 &8064821616456022506
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +665,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7504728567027428760, guid: caf95776d39926fadb7fed91f41c6f0e, type: 3}
+      propertyPath: droneShootDriver
+      value: 
+      objectReference: {fileID: 3490180184953124705}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -966,6 +994,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5643543328062467058, guid: 0193b136dcc4826c0964bc511303a628, type: 3}
   m_PrefabInstance: {fileID: 6990132966110397454}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3490180184953124705 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5867746693063045999, guid: 0193b136dcc4826c0964bc511303a628, type: 3}
+  m_PrefabInstance: {fileID: 6990132966110397454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33bb3fbff7aea7fe4b6ad1b8735d3257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8518793761223459176
 PrefabInstance:
   m_ObjectHideFlags: 0

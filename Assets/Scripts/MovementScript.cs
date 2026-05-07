@@ -168,6 +168,7 @@ public class MovementScript : MonoBehaviour
         }
         else
         {
+            jumpavailable = false;
             velocity += Physics.gravity * Time.deltaTime;
         }
 
@@ -178,6 +179,7 @@ public class MovementScript : MonoBehaviour
 
         if (JumpInputaction.IsPressed() && canControl)
         {
+            
             if (jumpavailable)
             {
 

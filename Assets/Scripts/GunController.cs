@@ -4,8 +4,7 @@ using UnityEngine.InputSystem;
 public class GunController : MonoBehaviour
 {
     public static GunController Instance { get; private set; }
-
-    public GameObject bulletHolePrefab;
+    
     public Transform spawnTransform;
 
     [Header("Gun Properties")]
@@ -15,6 +14,8 @@ public class GunController : MonoBehaviour
     public GameObject LaserPrefab;
 
     private GameObject PreviousLaser;
+
+    public SFXDriver droneShootDriver;
 
     private void Awake()
     {
@@ -40,18 +41,14 @@ public class GunController : MonoBehaviour
                     spawnTransform.transform.forward,
                     out hit, falloffDistance))
             {
-                if (hit.collider.gameObject.layer == 6 && bulletHolePrefab)
-                {
-                    GameObject o = Instantiate(bulletHolePrefab);
-                    o.transform.position = hit.point;
-                }
-                else if (hit.collider.gameObject.layer == 9)
+                if (hit.collider.gameObject.layer == 9)
                 {
                     // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
                     Target t = hit.collider.gameObject.GetComponent<Target>();
                     t.Hit();
                 }
                 CylinderInstantiator(hit.point);
+                droneShootDriver.PlayRandomSound();
             }
         }
     }

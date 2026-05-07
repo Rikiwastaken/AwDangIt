@@ -39,6 +39,8 @@ public class GrappleController : MonoBehaviour
     public float yrotationpersec;
     public float zrotationpersec;
 
+    public AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +70,7 @@ public class GrappleController : MonoBehaviour
             {
                 Isgrappling = false;
                 _characterController.Move(previousvelocity);
+                audioSource.Stop();
                 return;
             }
             Vector3 velocity = (SelectedGrapplePoint.transform.position - CameraTransform.position).normalized * grapplingspeed * Time.deltaTime;
@@ -79,6 +82,7 @@ public class GrappleController : MonoBehaviour
             if (SelectedGrapplePoint != null && _grappleAction.WasPerformedThisFrame())
             {
                 Isgrappling = true;
+                audioSource.Play();
             }
         }
     }
