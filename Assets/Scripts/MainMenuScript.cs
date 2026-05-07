@@ -158,7 +158,7 @@ public class MainMenuScript : MonoBehaviour
     {
         string levelname = ButtonTMP.text;
         Debug.Log("loading level : " + levelname);
-        SceneManager.LoadScene(levelname);
+        SceneManager.LoadScene("Scenes/Levels/" + levelname);
     }
 
     public void QuitButton()
