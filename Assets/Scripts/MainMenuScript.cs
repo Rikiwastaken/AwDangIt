@@ -161,7 +161,7 @@ public class MainMenuScript : MonoBehaviour
         string levelname = ButtonTMP.text;
         DataScript.instance.currentlevelID = levelnames.IndexOf(levelname);
         Debug.Log("loading level : " + levelname);
-        SceneManager.LoadScene("Scenes/Levels/" + levelname);
+        LoadingScreenScript.instance.LoadScene("Scenes/Levels/" + levelname);
     }
 
     public void QuitButton()

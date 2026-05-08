@@ -8,7 +8,7 @@ public class DeathTrigger : MonoBehaviour
 
         if (other.gameObject.layer == 3)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            LoadingScreenScript.instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
             //MovementScript.Instance.Respawn();
         }
     }

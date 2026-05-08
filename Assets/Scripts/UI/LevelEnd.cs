@@ -68,7 +68,7 @@ public class LevelEnd : MonoBehaviour
     public void LevelSelect()
     {
         MusicManager.Instance.SetAngryness(0f);
-        SceneManager.LoadScene("Scenes/LevelSelect", LoadSceneMode.Single);
+        LoadingScreenScript.instance.LoadScene("LevelSelect");
     }
 
     public void Restart()

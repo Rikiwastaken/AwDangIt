@@ -18,7 +18,7 @@ public class UIRoot : MonoBehaviour
     {
         if (_restartAction.WasPressedThisFrame())
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            LoadingScreenScript.instance.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

@@ -11,7 +11,7 @@ public class FinishHandler : MonoBehaviour
         if (other.gameObject.layer == 3)
         {
             Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene("Scenes/LevelSelect", LoadSceneMode.Single);
+            LoadingScreenScript.instance.LoadScene("Scenes/LevelSelect");
         }
     }
 }
