@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeathTrigger : MonoBehaviour
 {
@@ -7,7 +8,8 @@ public class DeathTrigger : MonoBehaviour
 
         if (other.gameObject.layer == 3)
         {
-            MovementScript.Instance.Respawn();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            //MovementScript.Instance.Respawn();
         }
     }
 }

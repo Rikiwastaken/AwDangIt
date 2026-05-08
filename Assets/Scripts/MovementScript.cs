@@ -110,7 +110,11 @@ public class MovementScript : MonoBehaviour
         rotationX -= mouseY;
         rotationX = Mathf.Clamp(rotationX, minVerticalAngle, maxVerticalAngle);
 
-        CameraTransform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
+        if (canControl)
+        {
+            CameraTransform.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
+        }
+
 
         rotationY += mouseX;
         transform.rotation = Quaternion.Euler(0f, rotationY, 0f);
@@ -180,7 +184,7 @@ public class MovementScript : MonoBehaviour
 
         if (JumpInputaction.IsPressed() && canControl)
         {
-            
+
             if (jumpavailable)
             {
 
