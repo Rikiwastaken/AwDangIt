@@ -9,13 +9,15 @@ public class LoadingScreenScript : MonoBehaviour
 
     public Image LoadingImage;
 
-    public float movepersecond;
-
     public float startx;
 
     private bool loadscene;
 
     private string scenetolaod;
+
+    public float timefortransition;
+
+    private float transitionendtime;
 
     private void Awake()
     {
@@ -30,17 +32,24 @@ public class LoadingScreenScript : MonoBehaviour
 
             if (LoadingImage.transform.localPosition.x < 0)
             {
-                LoadingImage.transform.localPosition += new Vector3(movepersecond * Time.deltaTime, 0f, 0f);
+                float currentx = Mathf.Lerp(LoadingImage.transform.localPosition.x, 0f, 1.0f - (transitionendtime - Time.time) / timefortransition);
+                LoadingImage.transform.localPosition = new Vector3(currentx, LoadingImage.transform.localPosition.y, LoadingImage.transform.localPosition.z);
                 if (LoadingImage.transform.localPosition.x >= 0)
                 {
                     SceneManager.LoadScene(scenetolaod);
+                    transitionendtime = -1;
                 }
             }
             else
             {
+                if (transitionendtime == -1)
+                {
+                    transitionendtime = Time.time + timefortransition;
+                }
                 if (LoadingImage.transform.localPosition.x < -startx)
                 {
-                    LoadingImage.transform.localPosition += new Vector3(movepersecond * Time.deltaTime, 0f, 0f);
+                    float currentx = Mathf.Lerp(LoadingImage.transform.localPosition.x, -startx, 1.0f - (transitionendtime - Time.time) / timefortransition);
+                    LoadingImage.transform.localPosition = new Vector3(currentx, LoadingImage.transform.localPosition.y, LoadingImage.transform.localPosition.z);
                 }
                 else
                 {
@@ -56,6 +65,7 @@ public class LoadingScreenScript : MonoBehaviour
         LoadingImage.transform.localPosition = new Vector3(startx, LoadingImage.transform.localPosition.y, LoadingImage.transform.localPosition.z);
         scenetolaod = sceneName;
         loadscene = true;
+        transitionendtime = Time.time + timefortransition;
     }
 
     public void LoadScene(int sceneID)
@@ -63,6 +73,7 @@ public class LoadingScreenScript : MonoBehaviour
         LoadingImage.transform.localPosition = new Vector3(startx, LoadingImage.transform.localPosition.y, LoadingImage.transform.localPosition.z);
         scenetolaod = SceneManager.GetSceneByBuildIndex(sceneID).name;
         loadscene = true;
+        transitionendtime = Time.time + timefortransition;
     }
 
 
