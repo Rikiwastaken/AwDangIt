@@ -35,5 +35,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/I'm the Bus.unity
     guid: c4e6efeee529ec1ecba09ebf05be65de
+  - enabled: 1
+    path: Assets/Scenes/Levels/Around the World.unity
+    guid: 5bae9130afd220c42af29148fe81571a
+  - enabled: 1
+    path: Assets/Scenes/Levels/Battlefield.unity
+    guid: 3883ff60c52fa86e7976077236a8844e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: cbd80cbcf19392641991cdc9b3bbdce7, type: 3}
