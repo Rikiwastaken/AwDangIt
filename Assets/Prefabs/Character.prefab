@@ -111,6 +111,8 @@ MonoBehaviour:
   sensitivityY: 0.15
   minVerticalAngle: -80
   maxVerticalAngle: 80
+  rotationX: 0
+  rotationY: 0
   JumpVerticalSpeed: 6.5
   DoubleJumpSpeedRatio: 1
   jumpavailable: 0
@@ -178,6 +180,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1acfc0016b28f4335b5e15c3849232c6, type: 3}
   - {fileID: 8300000, guid: 9993dbb1a6258a4578b6567ea8779729, type: 3}
   spatialBlend: 0
+  SFXMixergroup: {fileID: -7841863019747787572, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}
 --- !u!82 &6151553051418387642
 AudioSource:
   m_ObjectHideFlags: 0
@@ -187,7 +190,7 @@ AudioSource:
   m_GameObject: {fileID: 993830497084104787}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7841863019747787572, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}
   m_audioClip: {fileID: 8300000, guid: 13a3f024c47e2d4e589a338de12fd56c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.45
@@ -274,7 +277,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  SFXMixergroup: {fileID: -7841863019747787572, guid: f74cafb7bc42f2c48a0adf39af96af95, type: 2}
 --- !u!1 &2410218130839335107
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,3 +584,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d20d6e1f75dcb8d9ea6a52a17ece6b58, type: 3}
   - {fileID: 8300000, guid: 4c3261244afb4318abd6716bb8e74f48, type: 3}
   spatialBlend: 0
+  SFXMixergroup: {fileID: 0}

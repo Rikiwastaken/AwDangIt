@@ -26,6 +26,7 @@ public class ModeSwitcher : MonoBehaviour
     [Header("debug")] public bool inTimestop = false;
     public bool playerHasControl = false;
 
+    private float _lostControlAt = 0f;
     private float _regainControlAt = 0f;
 
     // Start is called before the first frame update
@@ -60,6 +61,7 @@ public class ModeSwitcher : MonoBehaviour
                 {
                     ExitMovement();
                     
+                    _lostControlAt = Time.time;
                     _regainControlAt = Time.time + 0.5f;
                 }
             }
@@ -68,7 +70,8 @@ public class ModeSwitcher : MonoBehaviour
                 if (_modeSwitchInput.WasPressedThisFrame())
                 {
                     ExitTimestop();
-                    
+
+                    _lostControlAt = Time.time;
                     _regainControlAt = Time.time + 0.5f;
                 }
             }
@@ -88,6 +91,18 @@ public class ModeSwitcher : MonoBehaviour
                     EnterMovement();
                 }
             }
+            else
+            {
+                float prog = (Time.time - _lostControlAt) / (_regainControlAt - _lostControlAt);
+                if (!inTimestop)
+                {
+                    MusicManager.Instance.SetAngryness(prog);
+                }
+                else
+                {
+                    MusicManager.Instance.SetAngryness(1f - prog);
+                }
+            }
         }
     }
 
@@ -97,6 +112,7 @@ public class ModeSwitcher : MonoBehaviour
         MovementScript.Instance.enabled = true;
         GunController.Instance.enabled = true;
         TimerScript.Instance.UnPauseTimer();
+        MusicManager.Instance.SetAngryness(1);
     }
 
     private void ExitMovement()
@@ -123,6 +139,7 @@ public class ModeSwitcher : MonoBehaviour
         }
 
         Cursor.lockState = CursorLockMode.None;
+        MusicManager.Instance.SetAngryness(0);
     }
 
     private void ExitTimestop()

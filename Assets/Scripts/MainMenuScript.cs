@@ -148,7 +148,7 @@ public class MainMenuScript : MonoBehaviour
             string detailtext = latestselected.GetComponentInChildren<TextMeshProUGUI>().text + "\n";
             detailtext += "Best Time: " + TimerScript.TimeToString(currentleveldata.PBTime) + "\n";
             detailtext += "Best Timestops: " + currentleveldata.PBTimeStop + "\n";
-            detailtext += "Best Permutations: " + currentleveldata.PBMoves;
+            detailtext += "Best Moves: " + currentleveldata.PBMoves;
             DetailsTMP.text = detailtext;
         }
 

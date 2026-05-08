@@ -53,7 +53,7 @@ public class MovementScript : MonoBehaviour
     [Header("Post Processing Variables")]
     public float timetosetweight;
     private float lastweight;
-    private PostProcessVolume volume;
+    public PostProcessVolume volume;
 
     [Header("SFX DRIVERS")]
     public SFXDriver sfxJumpDriver;
@@ -90,7 +90,7 @@ public class MovementScript : MonoBehaviour
         JumpInputaction = InputSystem.actions.FindAction("Jump");
         cc = GetComponent<CharacterController>();
         CameraTransform = GetComponentInChildren<CinemachineVirtualCamera>().transform;
-        volume = FindAnyObjectByType<PostProcessVolume>();
+        // volume = FindAnyObjectByType<PostProcessVolume>();
         animator = GetComponentInChildren<Animator>();
     }
 
